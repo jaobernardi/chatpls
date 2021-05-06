@@ -18,7 +18,7 @@
 > ✳️ Lembre-se de verificar se já não há outra sugestão com a mesma ideia ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
 
 ## ![DankMods](https://cdn.betterttv.net/frankerfacez_emote/420157/1) **To-do:**
-- [ ] Terminar o README.md 
+- [x] Terminar o README.md 
 - [ ] Terminar as estruturas e os servidores
 - [ ] Load-balancing?  
 
