@@ -6,7 +6,9 @@
 ```
 
 ## ![pepeMeltdown](https://cdn.betterttv.net/emote/5ba84271c9f0f66a9efc1c86/1x) **Como usar** 
-É simples, basta acessar https://example.com e conectar com sua conta da twitch ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
+É simples, basta acessar https://example.com e conectar com sua conta da twitch!
+>✳️ Você precisa estar seguindo o [**canal do cellbit**](https://twitch.tv/cellbit) ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
+
 
 ## ![dankG](https://cdn.betterttv.net/emote/60354e667c74605395f33006/1x) **Sugestões**
 > Tem que fazer esse parte ainda ![LULW](https://cdn.betterttv.net/frankerfacez_emote/139407/1)
@@ -15,3 +17,6 @@
 - [ ] Terminar o README.md 
 - [ ] Terminar as estruturas e os servidores
 - [ ] Load-balancing?  
+
+***
+> Por [@jaobernard](https://twitter.com/jaobernard) com 💖
