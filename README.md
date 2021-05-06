@@ -7,8 +7,15 @@
 É simples, basta acessar https://example.com e conectar com sua conta da twitch!
 >✳️ Você precisa estar seguindo o [**canal do cellbit**](https://twitch.tv/cellbit) ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
 
+## ![HACKERMANS](https://cdn.betterttv.net/emote/5b490e73cf46791f8491f6f4/1x) **Bugs**
+
+> Para reportar bugs, clique [aqui](https://github.com/jaobernardi/chatpls/issues/new?assignees=jaobernardi&labels=bug&template=relat-rio-de-bug-.md&title=)
+
 ## ![dankG](https://cdn.betterttv.net/emote/60354e667c74605395f33006/1x) **Sugestões**
-> Tem que fazer esse parte ainda ![LULW](https://cdn.betterttv.net/frankerfacez_emote/139407/1)
+
+> Para dar sugestões de novas funcionalidades ou alterações em funções já existentes, clique [aqui](https://github.com/jaobernardi/chatpls/issues/new?assignees=jaobernardi&labels=suggestion&template=sugest-o.md&title=)
+
+> ✳️ Lembre-se de verificar se já não há outra sugestão com a mesma ideia ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
 
 ## ![DankMods](https://cdn.betterttv.net/frankerfacez_emote/420157/1) **To-do:**
 - [ ] Terminar o README.md 
