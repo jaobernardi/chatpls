@@ -3,7 +3,7 @@ name: Sugestão
 about: Sugira uma alteração ou uma nova funcionalidade.
 title: ''
 labels: suggestion
-assignees: ''
+assignees: 'jaobernardi'
 
 ---
 
