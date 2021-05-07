@@ -1,0 +1,11 @@
+{
+    "private_key": "",
+    "certificate": "",
+    "host": "0.0.0.0",
+    "port": 443,
+    "scopes": {
+        "api": "api.chatpls.live",
+        "auth": "auth.chatpls.live",
+        "home": "chatpls.live"
+    }
+}
