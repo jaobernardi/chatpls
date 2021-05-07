@@ -1,3 +1,5 @@
+import json
+
 class EventResponse(object):
 	"""
 	This class powers the event module.
