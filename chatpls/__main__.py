@@ -3,7 +3,7 @@ import servers
 
 config = Config()
 server = Server(config.host, config.port, config.certificate, config.private_key)
-server.http_start()
+server.https_start()
 def shutdown(*args, **kwargs):
     server.stop()
     exit()
