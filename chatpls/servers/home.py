@@ -13,13 +13,13 @@ def normal_http(event):
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
-        content = open("web_assets\\index.html", "rb").read()
-        return Response.make(
-            404,
-            'Not Found', 
-            default_headers|{
-                'Content-Type': 'text/html',
-                'Content-Length': len(content)
-            },
-            content
-        )
+		content = open("web_assets\\index.html", "rb").read()
+		return Response.make(
+			404,
+			'Not Found', 
+			default_headers|{
+				'Content-Type': 'text/html',
+				'Content-Length': len(content)
+			},
+			content
+		)
