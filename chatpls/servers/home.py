@@ -6,9 +6,9 @@ import json
 config = Config()
 mime_types = json.load(open("mime_types.json"))
 errors = {
-	"404": b"",
-	"403": b"",
-	"500": b"",
+	404: b"",
+	403: b"",
+	500: b"",
 	}
 
 
