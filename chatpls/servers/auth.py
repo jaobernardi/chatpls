@@ -6,8 +6,10 @@ config = Config()
 @events.add_handle("http_request")
 def normal_http(event):
 	request = event.request
-	print(request.headers)
 	if "Host" in request.headers and request.headers["Host"] == config.scopes["api"]:
+		default_headers = {
+			"Server": "chatpls/1.0",
+		}
 		path = [i for i in request.path.split("/")[1:] if i]
 		# check api-method.
 		match path:
@@ -16,7 +18,7 @@ def normal_http(event):
 				return Response.make(
 					200,
 					'OK',
-					{'Content-Type': 'application/json',
+					default_headers | {'Content-Type': 'application/json',
 					'Content-Length': len(message)},
 					message
 				)
@@ -25,7 +27,7 @@ def normal_http(event):
 				return Response.make(
 					200,
 					'OK',
-					{'Content-Type': 'application/json',
+					default_headers | {'Content-Type': 'application/json',
 					'Content-Length': len(message)},
 					message
 				)
