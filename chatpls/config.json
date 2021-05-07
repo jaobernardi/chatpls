@@ -1,6 +1,6 @@
 {
-    "private_key": "",
-    "certificate": "",
+    "private_key": "/etc/letsencrypt/live/chatpls.live/privkey.pem",
+    "certificate": "/etc/letsencrypt/live/chatpls.live/fullchain.pem",
     "host": "0.0.0.0",
     "port": 443,
     "scopes": {

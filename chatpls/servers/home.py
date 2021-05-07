@@ -9,7 +9,7 @@ mime_types = json.load(open("mime_types.json"))
 @events.add_handle("http_request")
 def normal_http(event):
 	request = event.request
-	if "Host" in request.headers and request.headers["Host"] == config.scopes["main"]:
+	if "Host" in request.headers and request.headers["Host"] == config.scopes["home"]:
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
