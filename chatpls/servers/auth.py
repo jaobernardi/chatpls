@@ -30,13 +30,30 @@ def auth_http(event):
 				user_info = user_request.json()
 				with Database() as db:
 					user = db.create_user(user_info["preferred_username"], twitch_query["access_token"], twitch_query["refresh_token"], twitch_query["id_token"], user_info["sub"])
-					db.create_token("".join([choice(ascii_letters) for i in range(100)]), user)
-				
+					
+					# if user already exists, get a existent token and update user.
+					if not user:
+						# Grab the user object and update it's access credentials.
+						user = db.get_user(user_info["preferred_username"])
+						user.update_access_token(twitch_query["access_token"], twitch_query["refresh_token"])
+						# get existent tokens
+						tokens_query = db.get_tokens(user.user_id)
+						# if there is no tokens, create a new one.
+						if not tokens_query:
+							token = db.create_token("".join([choice(ascii_letters) for i in range(100)]), user)
+						# if there is a token, return it.
+						else:
+							token = tokens_query[0]
+					# if user is new, create a new token.
+					else:
+						token = db.create_token("".join([choice(ascii_letters) for i in range(100)]), user)
+
 				return Response.make(
-					200,
-					'OK',
-					default_headers | {'Content-Type': 'application/json'},
-					json.dumps(twitch_query).encode()
+					302,
+					'Found',
+					default_headers | {'Location': 'https://chatpls.live',
+					'Set-Cookie': f'sessionToken={token}; Max-Age=604800; Secure; Domain=chatpls.live'},
+					b""
 				)
 			return Response.make(
 				302,

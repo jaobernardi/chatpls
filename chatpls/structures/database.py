@@ -52,9 +52,10 @@ class Database:
 		)
 		x = []
 		for row in cursor:
-			if (time() - row[2]) > 604800:
+			if (time() - row[2]) >= 604800:
 				self.delete_token(row[1])
-			x.append(row[0])
+			else:
+				x.append(row[0])
 		return x
 	
 	def get_user(self, username):
@@ -88,5 +89,6 @@ class Database:
 			"INSERT INTO `tokens`(`user_id`, `token`) VALUES (?, ?)", 
 			(user.user_id, token)
 		)
+		return token
 
 
