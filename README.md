@@ -4,8 +4,8 @@
 > Chatpls é um projeto **independente** e não está vinculado com a Twitch ou Cellbit.
 
 ## ![pepeMeltdown](https://cdn.betterttv.net/emote/5ba84271c9f0f66a9efc1c86/1x) **Como usar** 
-É simples, basta acessar https://example.com e conectar com sua conta da twitch!
->✳️ Você precisa estar seguindo o [**canal do cellbit**](https://twitch.tv/cellbit) ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
+É simples, basta acessar https://chatpls.live e conectar com sua conta da twitch! _(Chatpls apenas requisita a permissão de **ler** os canais o qual você segue e é inscrito. **Sua senha jamais será compartilhada com a aplicação.**)_
+>✳️ Você precisa estar inscrito no [**canal do cellbit**](https://twitch.tv/cellbit) ![hmmNice](https://cdn.frankerfacez.com/emoticon/543531/1)
 
 ## ![HACKERMANS](https://cdn.betterttv.net/emote/5b490e73cf46791f8491f6f4/1x) **Bugs**
 
