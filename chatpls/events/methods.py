@@ -31,7 +31,6 @@ def call_event(event_name, cancellable=False, event_field=None, **kwargs):
 	order = list(event_field[event_name])
 	order.sort()
 	order.reverse()
-	print(order)
 
 	event = EventResponse(cancellable=cancellable, **kwargs)
 
@@ -45,5 +44,4 @@ def call_event(event_name, cancellable=False, event_field=None, **kwargs):
 			if event.cancelled or event.response:
 				return event
 			event.response = handle(event)
-			print(event.response)
 	return event
