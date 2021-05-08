@@ -26,7 +26,7 @@ def auth_http(event):
 			if "code" in request.query_string:
 				twitch_request = requests.post(f'https://id.twitch.tv/oauth2/token?client_id=r9fxp28e0wimgjdpf9dg050ncn7spi&client_secret={config.client_secret}&code={request.query_string["code"]}&grant_type=authorization_code&redirect_uri=https://auth.chatpls.live')
 				twitch_query = twitch_request.json()
-				user_request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {access_token}"})
+				user_request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {twitch_query['access_token']}"})
 				user_info = user_request.json()
 				with Database() as db:
 					user = db.create_user(user_info["preferred_username"], twitch_query["access_token"], twitch_query["refresh_token"], twitch_query["id_token"], user_info["sub"])
