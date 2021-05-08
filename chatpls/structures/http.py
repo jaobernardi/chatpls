@@ -39,11 +39,15 @@ class Server(object):
 		# Start connection loop
 		with self.context.wrap_socket(self.socket, server_side=True) as ssock:
 			while True:
-				# Accept connection
-				conn, addr = ssock.accept()
-				# Route connection to thread
-				self.http_request_handler(conn, addr)
-
+				try:
+					# Accept connection
+					conn, addr = ssock.accept()
+					# Route connection to thread
+					self.http_request_handler(conn, addr)
+				except ssl.SSLError:
+					pass
+				except Exception as e:
+					print(e)
 	@classmethod
 	@tasks.thread_function
 	def http_request_handler(cls, conn, addr):
