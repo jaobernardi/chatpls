@@ -19,8 +19,22 @@
 
 ## ![DankMods](https://cdn.betterttv.net/frankerfacez_emote/420157/1) **To-do:**
 - [x] Terminar o README.md 
-- [ ] Terminar as estruturas e os servidores
-- [ ] Load-balancing?  
+- [x] Licensa
+- [x] Domain
+- [ ] Futuro load-balancer
+- [x] Flow de autenticação
+- [x] Terminar as estruturas e os servidores
+- [x] Database
+- [x] Link com a twitch
+- [ ] API de músicas:
+  * [ ] `/queue`
+  * [ ] `/queue/leave`
+  * [ ] `/queue/join`
+  * [ ] `/queue/keepalive`
+  * [ ] `/current`
+  * [ ] `/current/reaction`
+  * [ ] `/current/action`
+
 
 ***
 > Feito por [@jaobernard](https://twitter.com/jaobernard) com 💖
