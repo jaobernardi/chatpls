@@ -74,12 +74,13 @@ class Database:
 		)
 
 	def create_user(self, username, access_token, refresh_token, id_token, user_id):
-		cursor = self.conn.cursor()
-		cursor.execute(
-			"INSERT INTO `users`(`username`, `access_token`, `refresh_token`, `id_token`, `user_id`) VALUES (?, ?, ?, ?, ?)", 
-			(username, access_token, refresh_token, id_token, user_id)
-		)
-		return User(username, access_token, refresh_token, id_token, user_id)
+		if not self.get_user(username):
+			cursor = self.conn.cursor()
+			cursor.execute(
+				"INSERT INTO `users`(`username`, `access_token`, `refresh_token`, `id_token`, `user_id`) VALUES (?, ?, ?, ?, ?)", 
+				(username, access_token, refresh_token, id_token, user_id)
+			)
+			return User(username, access_token, refresh_token, id_token, user_id)
 
 	def create_token(self, token, user):
 		cursor = self.conn.cursor()
