@@ -2,6 +2,20 @@ import mariadb
 from .wrappers import Config
 from time import time
 
+class User:
+	def __init__(self, username, access_token, refresh_token, id_token, user_id):
+		self.username = username
+		self.access_token = access_token
+		self.refresh_token = refresh_token
+		self.id_token = id_token
+		self.user_id = user_id
+	
+	def update_access_token(self, access_token, refresh_token):
+		self.access_token = access_token
+		self.refresh_token = refresh_token
+		with Database() as db:
+			db.update_user(self)
+
 class Database:
 	def __init__(self):
 		config = Config()
@@ -75,16 +89,3 @@ class Database:
 		)
 
 
-class User:
-	def __init__(self, username, access_token, refresh_token, id_token, user_id):
-		self.username = username
-		self.access_token = access_token
-		self.refresh_token = refresh_token
-		self.id_token = id_token
-		self.user_id = user_id
-	
-	def update_access_token(self, access_token, refresh_token):
-		self.access_token = access_token
-		self.refresh_token = refresh_token
-		with Database() as db:
-			db.update_user(self)
