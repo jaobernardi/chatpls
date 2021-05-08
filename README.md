@@ -23,4 +23,4 @@
 - [ ] Load-balancing?  
 
 ***
-> Por [@jaobernard](https://twitter.com/jaobernard) com 💖
+> Feito por [@jaobernard](https://twitter.com/jaobernard) com 💖
