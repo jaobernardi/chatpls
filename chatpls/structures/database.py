@@ -71,7 +71,7 @@ class Database:
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"UPDATE `users` SET `username`=?, `access_token`=?, `refresh_token`=?, `id_token`=?, `user_id`=? WHERE `user_id`=?", 
-			(username, access_token, refresh_token, id_token, user_id, user_id)
+			(user.username, user.access_token, user.refresh_token, user.id_token, user.user_id, user.user_id)
 		)
 
 	def create_user(self, username, access_token, refresh_token, id_token, user_id):
