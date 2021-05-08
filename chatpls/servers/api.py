@@ -6,11 +6,14 @@ config = Config()
 @events.add_handle("http_request")
 def api_http(event):
 	request = event.request
+	print("reached API")
 	if "Host" in request.headers and request.headers["Host"] == config.scopes["api"]:
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
 		path = [i for i in request.path.split("/")[1:] if i]
+		print("reached api 2")
+		print(path)
 		# check api-method.
 		match path:
 			case ["incoming", *params]:
