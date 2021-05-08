@@ -13,6 +13,6 @@ def fallback_http(event):
 		200,
 		'OK',
 		default_headers,
-		f"If you're reading this, you fucked up.\nHeaders: {request.headers}\nQuery string: {request.query_string}\nData: {request.data}"
+		f"If you're reading this, you fucked up.\nHeaders: {request.headers}\nQuery string: {request.query_string}\nData: {request.data}".encode()
 	)
 		
