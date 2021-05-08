@@ -28,14 +28,15 @@ def auth_http(event):
 				twitch_query = twitch_request.json()
 				user_request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {twitch_query['access_token']}"})
 				user_info = user_request.json()
+				update_user = False
 				with Database() as db:
 					user = db.create_user(user_info["preferred_username"], twitch_query["access_token"], twitch_query["refresh_token"], twitch_query["id_token"], user_info["sub"])
 					
 					# if user already exists, get a existent token and update user.
 					if not user:
-						# Grab the user object and update it's access credentials.
-						user = db.get_user(user_info["preferred_username"])
-						user.update_access_token(twitch_query["access_token"], twitch_query["refresh_token"])
+						update_user = True
+						# Grab the user object
+						user = db.get_user(user_info["preferred_username"])						
 						# get existent tokens
 						tokens_query = db.get_tokens(user.user_id)
 						# if there is no tokens, create a new one.
@@ -47,7 +48,9 @@ def auth_http(event):
 					# if user is new, create a new token.
 					else:
 						token = db.create_token("".join([choice(ascii_letters) for i in range(100)]), user)
-
+				
+				if update_user:
+					user.update_access_token(twitch_query["access_token"], twitch_query["refresh_token"])
 				return Response.make(
 					302,
 					'Found',
