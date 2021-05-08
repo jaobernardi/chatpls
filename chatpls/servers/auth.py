@@ -24,9 +24,9 @@ def auth_http(event):
 					twitch_query = requests.post(f'https://id.twitch.tv/oauth2/token?client_id=r9fxp28e0wimgjdpf9dg050ncn7spi&client_secret={config.client_secret}&code={request.query_string["code"]}&grant_type=authorization_code&redirect_uri=https://auth.chatpls.live')
 			
 					return Response.make(
-						302,
-						'Found',
-						default_headers | {'Location': 'https://chatpls.live/'},
+						200,
+						'OK',
+						default_headers | {'Content-Type': 'application/json'},
 						json.dumps(twitch_query.json()).encode()
 					)
 				return Response.make(
