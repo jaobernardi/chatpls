@@ -36,10 +36,10 @@ def auth_http(event):
 					b""
 				)
 			case ["tokens", *params]:
-				message = b'{"status": 200, "message": "reached incoming path.", "error": false}'
+				message = b'{"status": 501, "message": "Not Implemented", "error": true}'
 				return Response.make(
-					200,
-					'OK',
+					501,
+					'Not Implemented',
 					default_headers | {'Content-Type': 'application/json',
 					'Content-Length': len(message)},
 					message
