@@ -22,4 +22,9 @@ def auth_http(event):
 				default_headers | {'Content-Type': 'application/json'},
 				json.dumps(twitch_query.json()).encode()
 			)
-		
+		return Response.make(
+			302,
+			'Found',
+			default_headers | {'Location': "https://id.twitch.tv/oauth2/authorize?client_id=r9fxp28e0wimgjdpf9dg050ncn7spi&redirect_uri=https://auth.chatpls.live&response_type=code&scope=openid user:read:subscriptions user:read:follows"}
+			b""
+		)
