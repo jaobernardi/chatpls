@@ -42,7 +42,7 @@ def call_event(event_name, cancellable=False, event_field=None, **kwargs):
 
 	for priority in order:
 		for handle in event_field[event_name][priority]:
-			if event.cancelled:
+			if event.cancelled or event.response:
 				return event
 			event.response = handle(event)
 			print(event.response)
