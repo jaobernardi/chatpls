@@ -52,6 +52,7 @@ class Database:
 		)
 		x = []
 		for row in cursor:
+			print(row)
 			if (time() - row[2]) >= 604800:
 				self.delete_token(row[1])
 			else:
