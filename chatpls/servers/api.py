@@ -34,3 +34,4 @@ def api_http(event):
 					'Content-Length': len(message)},
 					message
 				)
+		print("omegalul")
