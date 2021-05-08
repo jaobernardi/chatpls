@@ -1,5 +1,8 @@
 import events
 from structures import Response, Config
+import requests
+import json
+
 
 config = Config()
 
@@ -10,13 +13,13 @@ def auth_http(event):
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
-		print(request.query_string)
-		print(request.method)
-		print(request.data)
-		return Response.make(
-			200,
-			'OK',
-			default_headers,
-			b""
-		)
+		if "code" in request.query_string:
+			twitch_query = requests.post(f'https://id.twitch.tv/oauth2/token?client_id=r9fxp28e0wimgjdpf9dg050ncn7spi&client_secret={config.client_secret}&code={request.query_string["code"]}&grant_type=authorization_code&redirect_uri=https://auth.chatpls.live')
+	
+			return Response.make(
+				200,
+				'OK',
+				default_headers | {'Content-Type': 'application/json'},
+				json.dumps(twitch_query.json()).encode()
+			)
 		
