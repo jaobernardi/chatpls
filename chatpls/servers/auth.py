@@ -6,7 +6,7 @@ config = Config()
 @events.add_handle("http_request")
 def auth_http(event):
 	request = event.request
-	if "Host" in request.headers and request.headers["Host"] == config.scopes["api"]:
+	if "Host" in request.headers and request.headers["Host"] == config.scopes["auth"]:
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
