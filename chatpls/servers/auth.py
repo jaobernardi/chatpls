@@ -13,3 +13,9 @@ def auth_http(event):
 		print(request.query_string)
 		print(request.method)
 		print(request.data)
+		return Response.make(
+			200,
+			'OK',
+			default_headers,
+			b""
+		)
