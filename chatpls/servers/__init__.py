@@ -1,3 +1,3 @@
 from .auth import *
-from .chat import *
+from .api import *
 from .home import *
