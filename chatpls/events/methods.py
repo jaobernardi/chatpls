@@ -36,7 +36,7 @@ def call_event(event_name, cancellable=False, event_field=None, **kwargs):
 	event = EventResponse(cancellable=cancellable, **kwargs)
 
 	for handle in super_handles:
-		if event.cancelled:
+		if event.cancelled or event.response:
 			return event
 		event.response = handle(event_name, event)
 
