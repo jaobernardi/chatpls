@@ -66,7 +66,7 @@ class Database:
 		for row in cursor:
 			return User(*row)
 	
-	def update_user(self, user: User):
+	def update_user(self, user):
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"UPDATE `users` SET `username`=?, `access_token`=?, `refresh_token`=?, `id_token`=?, `user_id`=? WHERE `user_id`=?", 
@@ -81,7 +81,7 @@ class Database:
 		)
 		return User(username, access_token, refresh_token, id_token, user_id)
 
-	def create_token(self, token, user: User):
+	def create_token(self, token, user):
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"INSERT INTO `tokens`(`user_id`, `token`) VALUES (?, ?)", 
