@@ -1,6 +1,7 @@
 import mariadb
 from .wrappers import Config
 from time import time
+from datetime import datetime, timedelta
 
 class User:
 	def __init__(self, username, access_token, refresh_token, id_token, user_id):
@@ -53,7 +54,7 @@ class Database:
 		x = []
 		for row in cursor:
 			print(row)
-			if (time() - row[2]) >= 604800:
+			if (datetime.now() - row[2]) >= timedelta(seconds=604800):
 				self.delete_token(row[1])
 			else:
 				x.append(row[0])
@@ -88,7 +89,7 @@ class Database:
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"INSERT INTO `tokens`(`user_id`, `token`, `creation`) VALUES (?, ?, ?)", 
-			(user.user_id, token, int(time()))
+			(user.user_id, token, datetime.now())
 		)
 		return token
 
