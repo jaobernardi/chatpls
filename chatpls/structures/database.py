@@ -57,7 +57,7 @@ class Database:
 			if (datetime.now() - row[2]) >= timedelta(seconds=604800):
 				self.delete_token(row[1])
 			else:
-				x.append(row[0])
+				x.append(row[1])
 		return x
 	
 	def get_user(self, username):
