@@ -3,7 +3,7 @@ from structures import Response, Config
 
 config = Config()
 
-@events.add_handle("http_request", priority=-1)
+@events.add_handle("http_request", priority=10)
 def fallback_http(event):
 	request = event.request
 	default_headers = {
