@@ -45,4 +45,5 @@ def call_event(event_name, cancellable=False, event_field=None, **kwargs):
 			if event.cancelled:
 				return event
 			event.response = handle(event)
+			print(event.response)
 	return event
