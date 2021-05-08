@@ -87,8 +87,8 @@ class Database:
 	def create_token(self, token, user):
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"INSERT INTO `tokens`(`user_id`, `token`) VALUES (?, ?)", 
-			(user.user_id, token)
+			"INSERT INTO `tokens`(`user_id`, `token`, `creation`) VALUES (?, ?, ?)", 
+			(user.user_id, token, int(time()))
 		)
 		return token
 
