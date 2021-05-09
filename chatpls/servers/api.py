@@ -27,24 +27,30 @@ def api_http(event):
 
 			case ["current", "reaction"]:
 				if request.method != "POST":
+					print("1")
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif not current:
+					print("2")
 					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
+					print("3")
 					try:
 						data = json.loads(request.data)
+						print(data)
 						match data:
 							case {"token": token, "username": username, "action_id": action_id}:
 								output = {"status": 501, "message": "Not Implemented.", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 					except:
+						print("4")
 						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
-				else:					
+				else:			
+					print("5")		
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-
+				print(output)
 			case ["current", "action"]:
 			
 				output = {"status": 501, "message": "Not Implemented.", "error": True}
