@@ -44,21 +44,21 @@ def api_http(event):
 								print(users)												
 								if users:
 									if users[0] not in current["stats"]:
-										current["stats"] = action_id
+										current["stats"][users[0]] = action_id
 										if action_id == 0:
 											current["data"]["likes"] += 1
 										elif action_id == 1:
 											current["data"]["dislikes"] += 1
 										else:
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-									if current["stats"] == action_id:										
+									if current["stats"][users[0]] == action_id:										
 										output = {"status": 200, "message": "OK", "error": False}
 									else:
-										if action_id == 0 and current["stats"] == 1:
+										if action_id == 0 and current["stats"][users[0]] == 1:
 											current["data"]["dislikes"] -= 1
 											current["data"]["likes"] += 1
 											output = {"status": 200, "message": "OK", "error": False}
-										elif action_id == 1 and current["stats"] == 0:
+										elif action_id == 1 and current["stats"][users[0]] == 0:
 											current["data"]["dislikes"] += 1
 											current["data"]["likes"] -= 1
 
