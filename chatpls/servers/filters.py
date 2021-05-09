@@ -29,14 +29,14 @@ def analizer_http(event):
 		globals()["rates"][event.address[0]] = 0
 	globals()["rates"][event.address[0]] += 1
 	if globals()["rates"][event.address[0]] > 50:
-		globals()['timeouts'][event.address[0]] = time.time()+1
+		globals()['timeouts'][event.address[0]] = time.time()+60
 	
 	if event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] >= time.time():
 		return Response.make(
 			429,
 			'Too Many Requests',
 			{"Server": "chatpls/1.0"},
-			b"Error: 429 (Too Many Requests)"
+			f"Error: 429 (Too Many Requests)\nTimeout time left: {globals()['timeouts'][event.address[0]]-time.time()}".encode()
 		)
 	elif event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] < time.time():
 		globals()['timeouts'].pop(event.address[0])
