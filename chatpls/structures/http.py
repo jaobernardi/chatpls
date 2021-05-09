@@ -61,7 +61,7 @@ class Server(object):
 				if "Content-Length" in headers:
 					body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
 					print(len(body), headers["Content-Length"])
-					if len(body) >= headers["Content-Length"]:
+					if len(body) >= int(headers["Content-Length"]):
 						break
 				else:
 					break
