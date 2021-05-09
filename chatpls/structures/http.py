@@ -55,7 +55,7 @@ class Server(object):
 		data = b""
 		while True:
 			print(data)
-			new_data = conn.recv(1024)
+			new_data = conn.recv(1)
 			if not new_data:
 				break
 			data += new_data
