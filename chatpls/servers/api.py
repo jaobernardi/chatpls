@@ -45,6 +45,12 @@ def api_http(event):
 								if users:
 									if users[0] not in current["stats"]:
 										current["stats"] = action_id
+										if action_id == 0:
+											current["data"]["like"] += 1
+										elif action_id = 1:
+											current["data"]["dislike"] += 1
+										else:
+											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 									if current["stats"] == action_id:										
 										output = {"status": 200, "message": "OK", "error": False}
 									else:
