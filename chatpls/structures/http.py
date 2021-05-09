@@ -101,7 +101,7 @@ class Request(object):
 				break
 			self.headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
 			self._index+=1
-
+		print(data)
 		self.data = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
 
 
