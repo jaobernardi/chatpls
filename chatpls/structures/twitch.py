@@ -32,7 +32,7 @@ class TwitchAPI:
 			return True
 		return False
 
-	def get_user_subscription_status(self, access_token, refresh_token, id):
+	def check_subscription(self, user: User):
 		request = requests.get(f"https://api.twitch.tv/helix/subscriptions/user?user_id={user.user_id}&broadcaster_id=28579002", headers={"Authorization": f"Bearer {user.access_token}", "Client-Id": self.client_id})
 		if request.status_code not in [200, 404]:
 			new_access_token, new_refresh_token = self.refresh_access_token(user.refresh_token)
