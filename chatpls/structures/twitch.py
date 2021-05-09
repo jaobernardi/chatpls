@@ -16,7 +16,7 @@ class TwitchAPI:
 	def userinfo_data(self, user: User):
 		request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {user.access_token}"})
 		if request.status_code != 200:
-			new_access_token, new_refresh_token = self.refresh_access_token(refresh_token)
+			new_access_token, new_refresh_token = self.refresh_access_token(user.refresh_token)
 			user.update_access_token(new_access_token, new_refresh_token)
 			return userinfo_data(user)
 		return request.json()
