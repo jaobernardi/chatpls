@@ -47,7 +47,7 @@ def api_http(event):
 										current["stats"] = action_id
 										if action_id == 0:
 											current["data"]["like"] += 1
-										elif action_id = 1:
+										elif action_id == 1:
 											current["data"]["dislike"] += 1
 										else:
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
