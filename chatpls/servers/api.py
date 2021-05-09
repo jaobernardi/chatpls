@@ -35,7 +35,7 @@ def api_http(event):
 				elif not current:					
 					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
-					try:
+					if True:
 						data = json.loads(request.data.decode("utf-8"))
 						match data:
 							case {"token": token, "action_id": action_id}:
@@ -61,6 +61,7 @@ def api_http(event):
 										elif action_id == 1 and current["stats"] == 0:
 											current["data"]["dislikes"] += 1
 											current["data"]["likes"] -= 1
+
 											output = {"status": 200, "message": "OK", "error": False}
 										else:
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
@@ -68,9 +69,9 @@ def api_http(event):
 									output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-					except Exception as e:
-						print(e)						
-						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					#except Exception as e:
+					#	print(e)						
+					#	output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				else:							
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				
