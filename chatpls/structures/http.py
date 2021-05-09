@@ -53,13 +53,23 @@ class Server(object):
 	def http_request_handler(cls, conn, addr):
 		# Recieve data
 		data = b""
-		while True:
-			print(data)
+		headers = {}
+		while True:			
+			if b"\r\n\r\n" in data:
+				for line in data.split(b"")[1:]:
+					headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
+				if "Content-Length" in headers:
+					body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
+					print(len(body), headers["Content-Length"])
+					if len(body) >= headers["Content-Length"]:
+						break
+				else:
+					break
 			new_data = conn.recv(1)
 			if not new_data:
 				break
 			data += new_data
-			
+		print(data)
 		try:
 			request = Request(data, acknowledge=time())
 			event = events.call_event("http_request", request=request, connection=conn, address=addr)
