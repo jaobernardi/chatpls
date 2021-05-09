@@ -6,21 +6,19 @@ import time
 config = Config()
 rates = {}
 timeouts = {}
+clean_time = time.time() + 10
 
-@events.add_handle("startup")
-@thread_function
-def rate_reset(event):	
-	while True:	
-		print("Cleaning")	
-		rates = {}
-		time.sleep(2)
 
 @events.add_handle("http_request", priority=100)
 def analizer_http(event):
-	print(rates)
+
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
+
+	if clean_time <= time.time():
+		rates = {}
+
 	if event.address[0] not in rates:
 		rates[event.address[0]] = 0
 	rates[event.address[0]] += 1
