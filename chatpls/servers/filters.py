@@ -9,7 +9,7 @@ timeouts = {}
 
 @events.add_handle("startup")
 @thread_function
-def rate_reset():
+def rate_reset(event):
 	while True:
 		rates = {}
 		time.sleep(10)
