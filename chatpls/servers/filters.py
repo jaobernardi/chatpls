@@ -26,8 +26,8 @@ def analizer_http(event):
 		globals()['clean_time'] = time.time() + 10
 
 	if event.address[0] not in globals()["rates"]:
-		globals()["rates"][event.address[0]] = 0
-	globals()["rates"][event.address[0]] += 1
+		globals()["rates"][event.address[0]] = 0	
+	
 	if globals()["rates"][event.address[0]] > 50:
 		globals()['timeouts'][event.address[0]] = time.time()+60
 	
@@ -40,6 +40,8 @@ def analizer_http(event):
 		)
 	elif event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] < time.time():
 		globals()['timeouts'].pop(event.address[0])
+	else:
+		globals()["rates"][event.address[0]] += 1
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
