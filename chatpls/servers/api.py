@@ -20,7 +20,12 @@ def api_http(event):
 				output = {"status": 501, "message": "Not Implemented.", "error": True}
 
 			case ["current", "reaction"]:
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
+				if event.method != "POST":
+					output = {"status": 405, "message": "Method Not Allowed", "error": True}
+				elif not current:
+					output = {"status": 404, "message": "Not Found", "error": True}
+				else:
+					output = {"status": 501, "message": "Not Implemented.", "error": True}
 
 			case ["current", "action"]:
 				output = {"status": 501, "message": "Not Implemented.", "error": True}

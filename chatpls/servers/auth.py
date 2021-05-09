@@ -21,7 +21,7 @@ def auth_http(event):
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
-		match path:
+		match event.path:
 			case []:
 				if "code" in request.query_string:
 					twitch_request = requests.post(f'https://id.twitch.tv/oauth2/token?client_id=r9fxp28e0wimgjdpf9dg050ncn7spi&client_secret={config.client_secret}&code={request.query_string["code"]}&grant_type=authorization_code&redirect_uri=https://auth.chatpls.live')
