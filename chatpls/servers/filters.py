@@ -27,14 +27,14 @@ def analizer_http(event):
 	if rates[event.address[0]] > 10:
 		timeouts[event.address[0]] = time.time()+60
 	
-	if event.address[0] in timeouts and timeouts[event.address[0]] >= time():
+	if event.address[0] in timeouts and timeouts[event.address[0]] >= time.time():
 		return Response.make(
 			429,
 			'Too Many Requests',
 			{"Server": "chatpls/1.0"},
 			b"Error: 429 (Too Many Requests)"
 		)
-	elif event.address[0] in timeouts and timeouts[event.address[0]] < time():
+	elif event.address[0] in timeouts and timeouts[event.address[0]] < time.time():
 		timeouts.remove(event.address[0])
 	
 @events.add_handle("http_request", priority=-1)
