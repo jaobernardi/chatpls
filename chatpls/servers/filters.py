@@ -19,25 +19,25 @@ def analizer_http(event):
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
 
-	if clean_time <= time.time():
-		rates = {}
-		clean_time = time.time() + 10
+	if globals()['clean_time'] <= time.time():
+		globals()["rates"] = {}
+		globals()['clean_time'] = time.time() + 10
 
-	if event.address[0] not in rates:
-		rates[event.address[0]] = 0
-	rates[event.address[0]] += 1
-	if rates[event.address[0]] > 10:
-		timeouts[event.address[0]] = time.time()+60
+	if event.address[0] not in globals()["rates"]:
+		globals()["rates"][event.address[0]] = 0
+	globals()["rates"][event.address[0]] += 1
+	if globals()["rates"][event.address[0]] > 10:
+		globals()['timeouts'][event.address[0]] = time.time()+60
 	
-	if event.address[0] in timeouts and timeouts[event.address[0]] >= time.time():
+	if event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] >= time.time():
 		return Response.make(
 			429,
 			'Too Many Requests',
 			{"Server": "chatpls/1.0"},
 			b"Error: 429 (Too Many Requests)"
 		)
-	elif event.address[0] in timeouts and timeouts[event.address[0]] < time.time():
-		timeouts.remove(event.address[0])
+	elif event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] < time.time():
+		globals()['timeouts'].remove(event.address[0])
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
