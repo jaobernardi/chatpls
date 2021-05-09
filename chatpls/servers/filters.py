@@ -28,7 +28,7 @@ def analizer_http(event):
 	if event.address[0] not in globals()["rates"]:
 		globals()["rates"][event.address[0]] = 0
 	globals()["rates"][event.address[0]] += 1
-	if globals()["rates"][event.address[0]] > 10:
+	if globals()["rates"][event.address[0]] > 50:
 		globals()['timeouts'][event.address[0]] = time.time()+1
 	
 	if event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] >= time.time():
