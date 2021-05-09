@@ -52,8 +52,15 @@ class Server(object):
 	@tasks.thread_function
 	def http_request_handler(cls, conn, addr):
 		# Recieve data
+		data = b""
+		while True:
+			new_data = conn.recv(1024)
+			if not new_data:
+				break
+			data += new_data
+			
 		try:
-			request = Request(conn.recv(1024), acknowledge=time())
+			request = Request(data, acknowledge=time())
 			event = events.call_event("http_request", request=request, connection=conn, address=addr)
 			events.call_event("http_response", request=request, resp=event.response.decode('utf-8'))
 			if event.response:
