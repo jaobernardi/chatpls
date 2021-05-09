@@ -9,7 +9,7 @@ class TwitchAPI:
 		self._client_secret = client_secret
 	
 	def refresh_access_token(self, refresh_token):
-		request = requests.get(f"https://id.twitch.tv/oauth2/token?grant_type=refresh_token&refresh_token={refresh_token}&client_id={self.client_id}&client_secret={self._client_secret}")
+		request = requests.post(f"https://id.twitch.tv/oauth2/token?grant_type=refresh_token&refresh_token={refresh_token}&client_id={self.client_id}&client_secret={self._client_secret}")
 		print(request.data)
 		request_json = request.json()
 		return request_json["access_token"], request_json["refresh_token"]
