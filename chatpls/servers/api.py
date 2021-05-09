@@ -41,7 +41,7 @@ def api_http(event):
 							case {"token": token, "action_id": action_id}:
 								with Database() as db:
 									users = db.get_tokens(token=token)	
-									
+								print(current["voters"])
 								if users:
 									if users[0] not in current["voters"]:
 										output = {"status": 200, "message": "OK", "error": False}
