@@ -7,7 +7,7 @@ twitch = TwitchAPI('r9fxp28e0wimgjdpf9dg050ncn7spi', config.client_secret)
 queue = []
 current = {
 	'data': {'link': '', 'likes': 0, 'dislikes': 0, 'time': 0},
-	'voters': {}
+	'voters': []
 }
 
 @events.add_handle("http_request")
@@ -47,8 +47,10 @@ def api_http(event):
 										output = {"status": 200, "message": "OK", "error": False}
 										if action_id == 0:
 											current['data']['likes'] += 1
+											current["voters"].append(users[0])
 										elif action_id == 1:
 											current['data']['dislikes'] += 1
+											current["voters"].append(users[0])
 										else:
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 									else:
