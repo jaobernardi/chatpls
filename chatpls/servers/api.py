@@ -36,7 +36,9 @@ def api_http(event):
 					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
 					try:
+						print(request.data)
 						data = json.loads(request.data.decode("utf-8"))
+						print(data)
 						match data:
 							case {"token": token, "action_id": action_id}:
 								with Database() as db:
