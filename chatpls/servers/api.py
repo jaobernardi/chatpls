@@ -36,13 +36,12 @@ def api_http(event):
 					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
 					try:
-						print(request.data)
 						data = json.loads(request.data.decode("utf-8"))
-						print(data)
 						match data:
 							case {"token": token, "action_id": action_id}:
 								with Database() as db:
-									users = db.get_tokens(token=token)													
+									users = db.get_tokens(token=token)	
+								print(users)												
 								if users:
 									if users[0] not in current["stats"]:
 										current["stats"] = action_id
@@ -61,7 +60,8 @@ def api_http(event):
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-					except:						
+					except Exception as e:
+						print(e)						
 						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				else:							
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
