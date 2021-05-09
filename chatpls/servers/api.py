@@ -17,7 +17,7 @@ def api_http(event):
 		# check api-method.
 		match event.path:
 			case ["current"]:
-				if event.method != "GET":
+				if request.method != "GET":
 					default_headers = default_headers | {'Allow': 'GET'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif not current:
@@ -26,7 +26,7 @@ def api_http(event):
 					output = {"status": 200, "message": "OK", "error": False, "data": current}
 
 			case ["current", "reaction"]:
-				if event.method != "POST":
+				if request.method != "POST":
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif not current:
