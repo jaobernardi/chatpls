@@ -54,6 +54,7 @@ class Server(object):
 		# Recieve data
 		data = b""
 		while True:
+			print(data)
 			new_data = conn.recv(1024)
 			if not new_data:
 				break
