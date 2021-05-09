@@ -41,8 +41,7 @@ def api_http(event):
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 					except:
 						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-					else:
-						
+
 				else:					
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
