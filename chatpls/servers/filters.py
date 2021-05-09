@@ -10,6 +10,7 @@ timeouts = {}
 @events.add_handle("startup")
 @thread_function
 def rate_reset(event):
+	print("Cleaning")
 	while True:		
 		rates = {}
 		time.sleep(10)
@@ -20,21 +21,21 @@ def analizer_http(event):
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
-	if event.address not in rates:
-		rates[event.address] = 0
-	rates[event.address] += 1
-	if rates[event.address] > 10:
-		timeouts[event.address] = time.time()+60
+	if event.address[0] not in rates:
+		rates[event.address[0]] = 0
+	rates[event.address[0]] += 1
+	if rates[event.address[0]] > 10:
+		timeouts[event.address[0]] = time.time()+60
 	
-	if event.address in timeouts and timeouts[event.address] >= time():
+	if event.address[0] in timeouts and timeouts[event.address[0]] >= time():
 		return Response.make(
 			429,
 			'Too Many Requests',
 			{"Server": "chatpls/1.0"},
 			b"Error: 429 (Too Many Requests)"
 		)
-	elif event.address in timeouts and timeouts[event.address] < time():
-		timeouts.remove(event.address)
+	elif event.address[0] in timeouts and timeouts[event.address[0]] < time():
+		timeouts.remove(event.address[0])
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
