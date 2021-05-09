@@ -64,6 +64,8 @@ def api_http(event):
 											output = {"status": 200, "message": "OK", "error": False}
 										else:
 											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+								else:
+									output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 					except Exception as e:
