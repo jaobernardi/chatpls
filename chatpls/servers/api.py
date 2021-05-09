@@ -1,5 +1,6 @@
 import events
 from structures import Response, Config
+import json
 
 config = Config()
 
@@ -16,29 +17,40 @@ def api_http(event):
 		# check api-method.
 		match event.path:
 			case ["current"]:
-				message = b'{"status": 200, "message": "reached incoming path.", "error": false}'
-				return Response.make(
-					200,
-					'OK',
-					default_headers | {'Content-Type': 'application/json',
-					'Content-Length': len(message)},
-					message
-				)
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["current", "reaction"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["current", "action"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["current", "reaction"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["queue"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["queue", "join"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["queue", "leave"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
+			case ["queue", "keepalive"]:
+				output = {"status": 501, "message": "Not Implemented.", "error": True}
+
 			case []:
-				message = b'{"status": 200, "message": "OK", "error": false}'
-				return Response.make(
-					200,
-					'OK',
-					default_headers | {'Content-Type': 'application/json',
-					'Content-Length': len(message)},
-					message
-				)
+				output = {"status": 200, "message": "OK", "error": False}
+
 			case _:
-				message = b'{"status": 404, "message": "Not Found.", "error": true}'
-				return Response.make(
-					404,
-					'Not Found',
-					default_headers | {'Content-Type': 'application/json',
-					'Content-Length': len(message)},
-					message
-				)
+				output = {"status": 404, "message": "Not Found", "error": True}
+
+		jsonfied = json.dumps(output).encode()
+		return Response.make(
+			output["status"],
+			output["message"],
+			default_headers | {'Content-Type': 'application/json',
+			'Content-Length': len(jsonfied)},
+			jsonfied
+		)
