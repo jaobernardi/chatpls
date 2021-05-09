@@ -55,7 +55,7 @@ class Database:
 		elif token:
 			cursor.execute(
 				"SELECT * FROM tokens WHERE token=?", 
-				(user_id,)
+				(token,)
 			)
 		x = []
 		for row in cursor:
