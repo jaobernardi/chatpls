@@ -12,21 +12,22 @@ def api_http(event):
 		}
 		path = [i.lower() for i in request.path.split("/")[1:] if i]
 		# check api-method.
-		if path[0] == "incoming":
-			message = b'{"status": 200, "message": "reached incoming path.", "error": false}'
-			return Response.make(
-				200,
-				'OK',
-				default_headers | {'Content-Type': 'application/json',
-				'Content-Length': len(message)},
-				message
-			)
-		else:
-			message = b'{"status": 200, "message": "ok.", "error": false}'
-			return Response.make(
-				200,
-				'OK',
-				default_headers | {'Content-Type': 'application/json',
-				'Content-Length': len(message)},
-				message
-			)
+		match path:
+			case ["current"]:
+				message = b'{"status": 200, "message": "reached incoming path.", "error": false}'
+				return Response.make(
+					200,
+					'OK',
+					default_headers | {'Content-Type': 'application/json',
+					'Content-Length': len(message)},
+					message
+				)
+			case _:
+				message = b'{"status": 200, "message": "ok.", "error": false}'
+				return Response.make(
+					200,
+					'OK',
+					default_headers | {'Content-Type': 'application/json',
+					'Content-Length': len(message)},
+					message
+				)
