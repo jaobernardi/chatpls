@@ -14,11 +14,11 @@ class TwitchAPI:
 		return request_json["access_token"], request_json["refresh_token"]
 
 	def userinfo_data(self, user: User):
-		request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {access_token}"})
+		request = requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": f"Bearer {user.access_token}"})
 		if request.status_code != 200:
 			new_access_token, new_refresh_token = self.refresh_access_token(refresh_token)
 			user.update_access_token(new_access_token, new_refresh_token)
-			return userinfo_data(new_access_token, new_refresh_token)
+			return userinfo_data(user)
 		return request.json()
 
 	def get_user_follows(self, access_token, refresh_token, id, channel_id):
