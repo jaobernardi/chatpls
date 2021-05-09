@@ -29,7 +29,7 @@ def analizer_http(event):
 		globals()["rates"][event.address[0]] = 0
 	globals()["rates"][event.address[0]] += 1
 	if globals()["rates"][event.address[0]] > 10:
-		globals()['timeouts'][event.address[0]] = time.time()+60
+		globals()['timeouts'][event.address[0]] = time.time()+1
 	
 	if event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] >= time.time():
 		return Response.make(
@@ -39,7 +39,7 @@ def analizer_http(event):
 			b"Error: 429 (Too Many Requests)"
 		)
 	elif event.address[0] in globals()['timeouts'] and globals()['timeouts'][event.address[0]] < time.time():
-		globals()['timeouts'].remove(event.address[0])
+		globals()['timeouts'].pop(event.address[0])
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
