@@ -60,12 +60,21 @@ class Database:
 				x.append(row[1])
 		return x
 	
-	def get_user(self, username):
+	def get_user(self, username=None, user_id=None):
 		cursor = self.conn.cursor()
-		cursor.execute(
-			"SELECT * FROM users WHERE username=?", 
-			(username,)
-		)
+		if username:
+			cursor.execute(
+				"SELECT * FROM users WHERE username=?", 
+				(username,)
+			)
+		elif user_id:
+			cursor.execute(
+				"SELECT * FROM users WHERE user_id=?", 
+				(username,)
+			)
+		else:
+			raise ValueError("Missing value for username or user_id.")
+		
 		for row in cursor:
 			return User(*row)
 	
