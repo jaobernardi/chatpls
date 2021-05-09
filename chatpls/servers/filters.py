@@ -10,12 +10,13 @@ timeouts = {}
 @events.add_handle("startup")
 @thread_function
 def rate_reset(event):
-	while True:
+	while True:		
 		rates = {}
 		time.sleep(10)
 
 @events.add_handle("http_request", priority=100)
 def analizer_http(event):
+	print(rates)
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
