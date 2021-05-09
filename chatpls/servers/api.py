@@ -35,6 +35,7 @@ def api_http(event):
 					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
 					print("3")
+					print(request.data)
 					try:
 						data = json.loads(request.data)
 						print(data)
