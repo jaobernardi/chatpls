@@ -19,21 +19,21 @@ def analizer_http(event):
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
-	if event.addr not in rates:
-		rates[event.addr] = 0
-	rates[event.addr] += 1
-	if rates[event.addr] > 10:
-		timeouts[event.addr] = time.time()+60
+	if event.address not in rates:
+		rates[event.address] = 0
+	rates[event.address] += 1
+	if rates[event.address] > 10:
+		timeouts[event.address] = time.time()+60
 	
-	if event.addr in timeouts and timeouts[event.addr] >= time():
+	if event.address in timeouts and timeouts[event.address] >= time():
 		return Response.make(
 			429,
 			'Too Many Requests',
 			{"Server": "chatpls/1.0"},
 			b"Error: 429 (Too Many Requests)"
 		)
-	elif event.addr in timeouts and timeouts[event.addr] < time():
-		timeouts.remove(event.addr)
+	elif event.address in timeouts and timeouts[event.address] < time():
+		timeouts.remove(event.address)
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
