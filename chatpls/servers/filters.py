@@ -4,6 +4,9 @@ from tasks import thread_function
 import time
 
 config = Config()
+global rates
+global timeouts
+global clean_time
 rates = {}
 timeouts = {}
 clean_time = time.time() + 10
@@ -18,6 +21,7 @@ def analizer_http(event):
 
 	if clean_time <= time.time():
 		rates = {}
+		clean_time = time.time() + 10
 
 	if event.address[0] not in rates:
 		rates[event.address[0]] = 0
