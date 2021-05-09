@@ -9,11 +9,11 @@ timeouts = {}
 
 @events.add_handle("startup")
 @thread_function
-def rate_reset(event):
-	print("Cleaning")
-	while True:		
+def rate_reset(event):	
+	while True:	
+		print("Cleaning")	
 		rates = {}
-		time.sleep(10)
+		time.sleep(2)
 
 @events.add_handle("http_request", priority=100)
 def analizer_http(event):
