@@ -56,7 +56,7 @@ class Server(object):
 		headers = {}
 		while True:			
 			if b"\r\n\r\n" in data:
-				for line in data.split(b"")[1:]:
+				for line in data.split(b"\n")[1:]:
 					headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
 				if "Content-Length" in headers:
 					body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
