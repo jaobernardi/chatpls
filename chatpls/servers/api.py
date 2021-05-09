@@ -3,6 +3,9 @@ from structures import Response, Config
 
 config = Config()
 
+queue = []
+current = None
+
 @events.add_handle("http_request")
 def api_http(event):
 	request = event.request
@@ -10,9 +13,8 @@ def api_http(event):
 		default_headers = {
 			"Server": "chatpls/1.0",
 		}
-		path = [i.lower() for i in request.path.split("/")[1:] if i]
 		# check api-method.
-		match path:
+		match event.path:
 			case ["current"]:
 				message = b'{"status": 200, "message": "reached incoming path.", "error": false}'
 				return Response.make(
@@ -22,11 +24,20 @@ def api_http(event):
 					'Content-Length': len(message)},
 					message
 				)
-			case _:
-				message = b'{"status": 200, "message": "ok.", "error": false}'
+			case []:
+				message = b'{"status": 200, "message": "OK", "error": false}'
 				return Response.make(
 					200,
 					'OK',
+					default_headers | {'Content-Type': 'application/json',
+					'Content-Length': len(message)},
+					message
+				)
+			case _:
+				message = b'{"status": 404, "message": "Not Found.", "error": true}'
+				return Response.make(
+					404,
+					'Not Found',
 					default_headers | {'Content-Type': 'application/json',
 					'Content-Length': len(message)},
 					message

@@ -30,6 +30,9 @@ class EventResponse(object):
 		self._response = None
 		self.responsable = responsable
 	
+	def add_property(**kwargs):
+		self.__dict__ = self.__dict__ | kwargs
+
 	@property
 	def response(self):
 		return self._response

@@ -3,6 +3,12 @@ from structures import Response, Config
 
 config = Config()
 
+@events.add_handle("http_request", priority=100)
+def analizer_http(event):
+	request = event.request
+	path = [i.lower() for i in request.path.split("/")[1:] if i]
+	event.add_property(path=path)
+
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
 	request = event.request
