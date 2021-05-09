@@ -45,19 +45,28 @@ class Database:
 			(token,)
 		)
 
-	def get_tokens(self, user_id):
+	def get_tokens(self, user_id=None, token=None):
 		cursor = self.conn.cursor()
-		cursor.execute(
-			"SELECT * FROM tokens WHERE user_id=?", 
-			(user_id,)
-		)
+		if user_id:
+			cursor.execute(
+				"SELECT * FROM tokens WHERE user_id=?", 
+				(user_id,)
+			)
+		elif token:
+			cursor.execute(
+				"SELECT * FROM tokens WHERE token=?", 
+				(user_id,)
+			)
 		x = []
 		for row in cursor:
 			print(row)
 			if (datetime.now() - row[2]) >= timedelta(seconds=604800):
 				self.delete_token(row[1])
 			else:
-				x.append(row[1])
+				if token:
+					x.append(row[0])
+				elif user_id:
+					x.append(row[1])
 		return x
 	
 	def get_user(self, username=None, user_id=None):

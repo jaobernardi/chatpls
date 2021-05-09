@@ -60,7 +60,6 @@ class Server(object):
 					headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
 				if "Content-Length" in headers:
 					body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
-					print(len(body), headers["Content-Length"])
 					if len(body) >= int(headers["Content-Length"]):
 						break
 				else:
@@ -69,7 +68,6 @@ class Server(object):
 			if not new_data:
 				break
 			data += new_data
-		print(data)
 		try:
 			request = Request(data, acknowledge=time())
 			event = events.call_event("http_request", request=request, connection=conn, address=addr)
@@ -119,7 +117,6 @@ class Request(object):
 				break
 			self.headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
 			self._index+=1
-		print(data)
 		self.data = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
 
 
