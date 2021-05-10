@@ -13,7 +13,7 @@ def format_queue(inp):
 	queue = []
 	for item in inp:
 		item["add_time"] = item["add_time"].timestamp()
-		item["start_time"] = item["start_time"].timestamp()
+		item["start_time"] = item["start_time"].timestamp() if item["start_time"] else item["start_time"]
 		queue.append(item)
 	return queue
 
