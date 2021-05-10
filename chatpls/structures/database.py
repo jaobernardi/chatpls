@@ -72,7 +72,7 @@ class Database:
 		times = []
 		for row in cursor:
 			print(row)
-			if (datetime.now() - row[2]) >= timedelta(seconds=604800):
+			if (row[2].timestamp() - datetime.now().timestamp()) <= 0:
 				self.delete_token(row[1])
 			else:
 				times.append(row[2])
@@ -151,7 +151,7 @@ class Database:
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"INSERT INTO `tokens`(`user_id`, `token`, `creation`) VALUES (?, ?, ?)", 
-			(user.user_id, token, datetime.now())
+			(user.user_id, token, datetime.now()+timedelta(days=10))
 		)
 		return token
 
