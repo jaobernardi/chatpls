@@ -73,7 +73,8 @@ class Database:
 		for row in cursor:
 			print(row)
 			if (row[2].timestamp() - datetime.now().timestamp()) <= 0:
-				self.delete_token(row[1])
+				with Database() as db:
+					db.delete_token(row[1])
 			else:
 				times.append(row[2])
 				if token:
