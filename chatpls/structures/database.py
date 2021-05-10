@@ -95,7 +95,7 @@ class Database:
 		elif user_id:
 			cursor.execute(
 				"SELECT * FROM users WHERE user_id=?", 
-				(username,)
+				(user_id,)
 			)
 		else:
 			raise ValueError("Missing value for username or user_id.")
