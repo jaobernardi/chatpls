@@ -29,8 +29,6 @@ def api_http(event):
 				if request.method != "GET":
 					default_headers = default_headers | {'Allow': 'GET'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
-				elif not current:
-					output = {"status": 404, "message": "Not Found", "error": True, "data": current['data']}
 				else:
 					with Database() as db:
 						queue = format_queue(db.get_queue())

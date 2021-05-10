@@ -117,7 +117,7 @@ class Database:
 	def get_queue(self):
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"SELECT * FROM queue ORDER BY add_time DSC", 
+			"SELECT * FROM queue ORDER BY add_time DESC", 
 		)
 		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
 	
