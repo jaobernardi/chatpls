@@ -3,19 +3,30 @@ from .wrappers import Config
 from time import time
 from datetime import datetime, timedelta
 
-class User:
-	def __init__(self, username, access_token, refresh_token, id_token, user_id):
+class User(object):
+	def __init__(self, username, access_token, refresh_token, id_token, user_id, is_mod):
 		self.username = username
 		self.access_token = access_token
 		self.refresh_token = refresh_token
 		self.id_token = id_token
 		self.user_id = user_id
+		self.is_mod = is_mod
 	
 	def update_access_token(self, access_token, refresh_token):
 		self.access_token = access_token
 		self.refresh_token = refresh_token
 		with Database() as db:
 			db.update_user(self)
+
+	@property
+	def permissions(self):
+		with Database() as db:
+			return db.get_permissions(self.username)
+	
+	@permissions.setter
+	def permissions_setter(self, new_value):
+		with Database() as db:
+			return db.set_permissions(self, new_value)
 
 class Database:
 	def __init__(self):
@@ -90,8 +101,8 @@ class Database:
 	def update_user(self, user):
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"UPDATE `users` SET `username`=?, `access_token`=?, `refresh_token`=?, `id_token`=?, `user_id`=? WHERE `user_id`=?", 
-			(user.username, user.access_token, user.refresh_token, user.id_token, user.user_id, user.user_id)
+			"UPDATE `users` SET `username`=?, `access_token`=?, `refresh_token`=?, `id_token`=?, `user_id`=?, `is_mod`=? WHERE `user_id`=?", 
+			(user.username, user.access_token, user.refresh_token, user.id_token, user.user_id, user.is_mod, user.user_id)
 		)
 
 	def create_user(self, username, access_token, refresh_token, id_token, user_id):
@@ -102,6 +113,34 @@ class Database:
 				(username, access_token, refresh_token, id_token, user_id)
 			)
 			return User(username, access_token, refresh_token, id_token, user_id)
+
+	def get_queue(self)
+		cursor = self.conn.cursor()
+		cursor.execute(
+			"SELECT * FROM queue ORDER BY add_time DSC", 
+		)
+		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
+	
+	def delete_from_queue(self, username):
+		cursor = self.conn.cursor()
+		cursor.execute(
+			"DELETE FROM queue WHERE username=?", 
+			(username,)
+		)
+
+	def queue_set_running(self, username, start_time):
+		cursor = self.conn.cursor()
+		cursor.execute(
+			"UPDATE `queue` SET `start_time`=? WHERE `username`=?",
+			(start_time, username)
+		)
+
+	def append_to_queue(self, username, link, add_time):
+		cursor = self.conn.cursor()
+		cursor.execute(
+			"INSERT INTO `queue`(`username`, `link`, `add_time`) VALUES (?, ?, ?)",
+			(username, link, add_time)
+		)
 
 	def create_token(self, token, user):
 		cursor = self.conn.cursor()

@@ -1,14 +1,20 @@
 import events
 from structures import Response, Config, Database, TwitchAPI
 import json
+import time
+from urllib.parse import urlparse
 
 config = Config()
 twitch = TwitchAPI('r9fxp28e0wimgjdpf9dg050ncn7spi', config.client_secret)
-queue = []
-current = {
-	'data': {'link': '', 'likes': 0, 'dislikes': 0, 'time': 0},
-	'voters': []
-}
+
+
+def format_queue(inp):
+	queue = []
+	for item in inp:
+		item["add_time"] = item["add_time"].timestamp()
+		item["start_time"] = item["start_time"].timestamp()
+		queue.append(item)
+	return queue
 
 @events.add_handle("http_request")
 def api_http(event):
@@ -26,9 +32,14 @@ def api_http(event):
 				elif not current:
 					output = {"status": 404, "message": "Not Found", "error": True, "data": current['data']}
 				else:
-					output = {"status": 200, "message": "OK", "error": False, "data": current['data']}
+					with Database() as db:
+						queue = format_queue(db.get_queue())
+						output = {"status": 200, "message": "OK", "error": False, "data": None if not queue else queue[0]}
 
 			case ["current", "reaction"]:
+				output = {"status": 501, "message": "Not Implemented", "error": True}
+				
+			case ["current", "skip"]:
 				if request.method != "POST":					
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
@@ -38,41 +49,23 @@ def api_http(event):
 					try:
 						data = json.loads(request.data.decode("utf-8"))
 						match data:
-							case {"token": token, "action_id": action_id}:
+							case {"token": token}:
+								output = {"status": 403, "message": "Unauthorized", "error": True}
 								with Database() as db:
 									users = db.get_tokens(token=token)	
-								print(current["voters"])
-								if users:
-									if users[0] not in current["voters"]:
+									if users and db.get_user(user_id=users[0]).is_mod and queue := db.get_queue():
+										db.delete_from_queue(queue[0]["username"])
 										output = {"status": 200, "message": "OK", "error": False}
-										if action_id == 0:
-											current['data']['likes'] += 1
-											current["voters"].append(users[0])
-										elif action_id == 1:
-											current['data']['dislikes'] += 1
-											current["voters"].append(users[0])
-										else:
-											output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-									else:
-										output = {"status": 403, "message": "Unauthorized", "error": True}
-								else:
-									output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 					except Exception as e:					
 						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				else:							
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-				
-			case ["current", "action"]:
-			
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
-
-			case ["current", "reaction"]:
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
 
 			case ["queue"]:
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
+				with Database() as db:
+					output = {"status": 200, "message": "OK", "error": False, "queue": format_queue(db.get_queue())}
 
 			case ["queue", "join"]:
 				output = {"status": 501, "message": "Not Implemented.", "error": True}
