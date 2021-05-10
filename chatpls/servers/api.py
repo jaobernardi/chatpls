@@ -83,9 +83,9 @@ def api_http(event):
 							case {"token": token, "link": link}:								
 								with Database() as db:
 									users = db.get_tokens(token=token)
-									print(users)
-									if users:
+									if users:										
 										user = db.get_user(user_id=users[0])
+										print(user, twitch.check_subscription(user))
 										if twitch.check_subscription(user):
 											print(urlparse(link))
 											if urlparse(link).netloc == "youtube.com":
