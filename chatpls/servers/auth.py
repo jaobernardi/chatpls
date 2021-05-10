@@ -54,6 +54,7 @@ def auth_http(event):
 					
 					if update_user:
 						user.update_access_token(twitch_query["access_token"], twitch_query["refresh_token"])
+					print(time_left)
 					return Response.make(
 						302,
 						'Found',
