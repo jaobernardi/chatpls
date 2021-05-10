@@ -114,7 +114,7 @@ class Database:
 			)
 			return User(username, access_token, refresh_token, id_token, user_id)
 
-	def get_queue(self)
+	def get_queue(self):
 		cursor = self.conn.cursor()
 		cursor.execute(
 			"SELECT * FROM queue ORDER BY add_time DSC", 
