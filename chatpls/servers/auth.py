@@ -4,7 +4,7 @@ import requests
 import json
 from random import choice
 from string import ascii_letters
-from time import time
+from datetime import datetime
 
 errors = {
 	404: b"",
@@ -46,7 +46,7 @@ def auth_http(event):
 								token = db.create_token("".join([choice(ascii_letters) for i in range(100)]), user)
 							# if there is a token, return it.
 							else:
-								time_left = tokens_time[0].timestamp() - time()
+								time_left = tokens_time[0].timestamp() - datetime.now().timestamp()
 								token = tokens_query[0]
 						# if user is new, create a new token.
 						else:
