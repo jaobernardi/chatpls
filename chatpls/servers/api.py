@@ -83,6 +83,7 @@ def api_http(event):
 							case {"token": token, "link": link}:								
 								with Database() as db:
 									users = db.get_tokens(token=token)
+									print(users)
 									if users:
 										user = db.get_user(user_id=users[0])
 										if twitch.check_subscription(user):
