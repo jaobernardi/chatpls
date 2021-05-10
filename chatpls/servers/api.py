@@ -3,6 +3,7 @@ from structures import Response, Config, Database, TwitchAPI
 import json
 import time
 from urllib.parse import urlparse
+from datetime import datetime
 
 config = Config()
 twitch = TwitchAPI('r9fxp28e0wimgjdpf9dg050ncn7spi', config.client_secret)
@@ -41,8 +42,6 @@ def api_http(event):
 				if request.method != "POST":					
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
-				elif not current:					
-					output = {"status": 404, "message": "Not Found", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
 					try:
 						data = json.loads(request.data.decode("utf-8"))
@@ -66,11 +65,42 @@ def api_http(event):
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
 			case ["queue"]:
-				with Database() as db:
-					output = {"status": 200, "message": "OK", "error": False, "queue": format_queue(db.get_queue())}
+				if request.method != "POST":					
+					default_headers = default_headers | {'Allow': 'POST'}
+					output = {"status": 405, "message": "Method Not Allowed", "error": True}
+				else:
+					with Database() as db:
+						output = {"status": 200, "message": "OK", "error": False, "queue": format_queue(db.get_queue())}
 
 			case ["queue", "join"]:
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
+				if request.method != "POST":					
+					default_headers = default_headers | {'Allow': 'POST'}
+					output = {"status": 405, "message": "Method Not Allowed", "error": True}
+				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
+					try:
+						data = json.loads(request.data.decode("utf-8"))
+						match data:
+							case {"token": token, "link": link}:								
+								with Database() as db:
+									users = db.get_tokens(token=token)
+									if users:
+										user = db.get_user(user_id=users[0])
+										if twitch.check_subscription(user):
+											if urlparse(link).netloc == "youtube.com":
+												db.append_to_queue(user.username, link, datetime.now())
+												output = {"status": 200, "message": "OK", "error": False}
+											else:
+												output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+										else:
+											output = {"status": 403, "message": "Unauthorized", "error": True, "not_sub": True}
+									else:
+										output = {"status": 403, "message": "Unauthorized", "error": True}
+							case _:
+								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					except Exception as e:					
+						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+				else:							
+					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
 			case ["queue", "leave"]:
 				output = {"status": 501, "message": "Not Implemented.", "error": True}
