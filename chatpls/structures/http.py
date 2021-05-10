@@ -75,8 +75,8 @@ class Server(object):
 			events.call_event("http_response", request=request, resp=event.response.decode('utf-8'))
 			if event.response:
 				conn.send(event.response)
-		except:
-			pass
+		except Exception as e:
+			print(e)
 		conn.close()
 		
 		pass
