@@ -71,7 +71,6 @@ class Database:
 		x = []
 		times = []
 		for row in cursor:
-			print(row)
 			if (row[2].timestamp() - datetime.now().timestamp()) <= 0:
 				with Database() as db:
 					db.delete_token(row[1])
