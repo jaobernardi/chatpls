@@ -14,9 +14,6 @@ clean_time = time.time() + 10
 
 @events.add_handle("http_request", priority=100)
 def analizer_http(event):
-	print(globals()["rates"])
-	print(globals()["clean_time"]-time.time())
-	print(globals()['timeouts'])
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
