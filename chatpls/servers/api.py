@@ -77,7 +77,7 @@ def api_http(event):
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
-					try:
+					if True:
 						data = json.loads(request.data.decode("utf-8"))
 						match data:
 							case {"token": token, "link": link}:								
@@ -97,9 +97,9 @@ def api_http(event):
 										output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-					except Exception as e:
-						print(e)					
-						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					#except Exception as e:
+					#	print(e)					
+					#	output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				else:							
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
