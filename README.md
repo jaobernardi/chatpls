@@ -27,14 +27,13 @@
 - [x] Database
 - [x] Link com a twitch
 - [ ] API de músicas:
-  * [ ] `/queue`
+  * [x] `/queue`
   * [ ] `/queue/leave`
-  * [ ] `/queue/join`
+  * [x] `/queue/join`
   * [ ] `/queue/keepalive`
-  * [ ] `/current`
-  * [ ] `/current/reaction`
+  * [x] `/current`
+  * [ ] `/current/reaction` _(Adiado)_
   * [ ] `/current/action`
-
 
 ***
 > Feito por [@jaobernard](https://twitter.com/jaobernard) com 💖
