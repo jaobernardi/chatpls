@@ -56,7 +56,7 @@ class Database:
 			(token,)
 		)
 
-	def get_tokens(self, user_id=None, token=None):
+	def get_tokens(self, user_id=None, token=None, return_time=False):
 		cursor = self.conn.cursor()
 		if user_id:
 			cursor.execute(
@@ -69,15 +69,20 @@ class Database:
 				(token,)
 			)
 		x = []
+		times = []
 		for row in cursor:
 			print(row)
 			if (datetime.now() - row[2]) >= timedelta(seconds=604800):
 				self.delete_token(row[1])
 			else:
+				times.append(row[2])
 				if token:
 					x.append(row[0])
+					
 				elif user_id:
 					x.append(row[1])
+		if return_time:
+			return x, times
 		return x
 	
 	def get_user(self, username=None, user_id=None):
