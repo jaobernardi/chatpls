@@ -54,27 +54,28 @@ class Server(object):
 		# Recieve data
 		data = b""
 		headers = {}
-		while True:			
-			if b"\r\n\r\n" in data:
-				for line in data.split(b"\n")[1:]:
-					headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
-				if "Content-Length" in headers:
-					body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
-					if len(body) >= int(headers["Content-Length"]):
-						break
-				else:
-					break
-			new_data = conn.recv(1)
-			if not new_data:
-				break
-			data += new_data
 		try:
+			while True:			
+				if b"\r\n\r\n" in data:
+					for line in data.split(b"\n")[1:]:
+						headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
+					if "Content-Length" in headers:
+						body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
+						if len(body) >= int(headers["Content-Length"]):
+							break
+					else:
+						break
+				new_data = conn.recv(1)
+				if not new_data:
+					break
+				data += new_data
+		
 			request = Request(data, acknowledge=time())
 			event = events.call_event("http_request", request=request, connection=conn, address=addr)
 			events.call_event("http_response", request=request, resp=event.response.decode('utf-8'))
 			if event.response:
 				conn.send(event.response)
-		except IndexError:
+		except:
 			pass
 		conn.close()
 		
