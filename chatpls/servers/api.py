@@ -49,13 +49,17 @@ def api_http(event):
 					try:
 						data = json.loads(request.data.decode("utf-8"))
 						match data:
-							case {"token": token}:
-								output = {"status": 403, "message": "Unauthorized", "error": True}
+							case {"token": token}:								
 								with Database() as db:
 									users = db.get_tokens(token=token)	
-									if users and db.get_user(user_id=users[0]).is_mod and queue := db.get_queue():
-										db.delete_from_queue(queue[0]["username"])
-										output = {"status": 200, "message": "OK", "error": False}
+									if users and db.get_user(user_id=users[0]).is_mod:
+										if queue := db.get_queue():
+											db.delete_from_queue(queue[0]["username"])
+											output = {"status": 200, "message": "OK", "error": False}
+										else:
+											output = {"status": 404, "message": "Not Found", "error": True}
+									else:
+										output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 					except Exception as e:					
