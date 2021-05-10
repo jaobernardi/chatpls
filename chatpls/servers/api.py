@@ -65,7 +65,7 @@ def api_http(event):
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
 			case ["queue"]:
-				if request.method != "POST":					
+				if request.method != "GET":					
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				else:
