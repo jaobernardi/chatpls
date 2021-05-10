@@ -86,6 +86,7 @@ def api_http(event):
 									if users:
 										user = db.get_user(user_id=users[0])
 										if twitch.check_subscription(user):
+											print(urlparse(link))
 											if urlparse(link).netloc == "youtube.com":
 												db.append_to_queue(user.username, link, datetime.now())
 												output = {"status": 200, "message": "OK", "error": False}
