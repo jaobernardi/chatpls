@@ -5,7 +5,6 @@ import time
 from urllib.parse import urlparse
 from datetime import datetime
 import requests
-import dateutils
 import isodate
 
 config = Config()
