@@ -36,7 +36,7 @@ class Server(object):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.socket.bind((self.host, self.port))
 		self.socket.listen(50)
-		socket.settimeout(5)
+		self.socket.settimeout(5)
 		# Start connection loop
 		with self.context.wrap_socket(self.socket, server_side=True) as ssock:
 			while True:
