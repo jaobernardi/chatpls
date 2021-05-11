@@ -88,24 +88,22 @@ def api_http(event):
 									users = db.get_tokens(token=token)
 									if users:										
 										user = db.get_user(user_id=users[0])
-										queue = db.get_queue()
-										match queue:
-											case [{"username": "{user}".format(user=user.username)}, _]:
-												output = {"status": 403, "message": "Unauthorized", "error": True}
-											case _:
-												if twitch.check_subscription(user):
-													if urlparse(link).query and urlparse(link).netloc in ["youtube.com", "www.youtube.com"]:
-														params = {}
-														for query_string in urlparse(link).query.split("&"):
-															params[query_string.split("=")[0]] = query_string.split("=")[1]
-														print(params)
-														if 'v' in params:
-															db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now())
-															output = {"status": 200, "message": "OK", "error": False}
-													else:
-														output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+										if db.get_user_queue(user.username):
+											output = {"status": 403, "message": "Unauthorized", "error": True}
+										else:
+											if twitch.check_subscription(user):
+												if urlparse(link).query and urlparse(link).netloc in ["youtube.com", "www.youtube.com"]:
+													params = {}
+													for query_string in urlparse(link).query.split("&"):
+														params[query_string.split("=")[0]] = query_string.split("=")[1]
+													print(params)
+													if 'v' in params:
+														db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now())
+														output = {"status": 200, "message": "OK", "error": False}
 												else:
-													output = {"status": 403, "message": "Unauthorized", "error": True, "not_sub": True}
+													output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+											else:
+												output = {"status": 403, "message": "Unauthorized", "error": True, "not_sub": True}
 									else:
 										output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:

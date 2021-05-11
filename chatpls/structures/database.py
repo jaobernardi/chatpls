@@ -122,7 +122,7 @@ class Database:
 	def get_queue(self):
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"SELECT * FROM queue ORDER BY add_time DESC", 
+			"SELECT * FROM queue ORDER BY add_time ASC", 
 		)
 		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
 	
@@ -139,7 +139,14 @@ class Database:
 			"UPDATE `queue` SET `start_time`=? WHERE `username`=?",
 			(start_time, username)
 		)
-
+	def get_user_queue(self, username):
+		cursor = self.conn.cursor()
+		cursor.execute(
+			"SELECT * FROM queue WHERE username=?",
+			(username,) 
+		)
+		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
+	
 	def append_to_queue(self, username, link, add_time):
 		cursor = self.conn.cursor()
 		cursor.execute(
