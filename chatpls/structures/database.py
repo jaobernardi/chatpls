@@ -145,13 +145,13 @@ class Database:
 			"SELECT * FROM queue WHERE username=?",
 			(username,) 
 		)
-		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
+		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5], "length": row[6]} for row in cursor]
 	
-	def append_to_queue(self, username, link, add_time):
+	def append_to_queue(self, username, link, add_time, length):
 		cursor = self.conn.cursor()
 		cursor.execute(
-			"INSERT INTO `queue`(`username`, `link`, `add_time`) VALUES (?, ?, ?)",
-			(username, link, add_time)
+			"INSERT INTO `queue`(`username`, `link`, `add_time`, `length`) VALUES (?, ?, ?, ?)",
+			(username, link, add_time, length)
 		)
 
 	def create_token(self, token, user):

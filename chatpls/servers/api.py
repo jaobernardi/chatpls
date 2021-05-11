@@ -4,6 +4,9 @@ import json
 import time
 from urllib.parse import urlparse
 from datetime import datetime
+import requests
+import dateutils
+import isodate
 
 config = Config()
 twitch = TwitchAPI('r9fxp28e0wimgjdpf9dg050ncn7spi', config.client_secret)
@@ -75,7 +78,7 @@ def api_http(event):
 						output = {"status": 200, "message": "OK", "error": False, "queue": format_queue(db.get_queue())}
 
 			case ["queue", "join"]:
-				if request.method != "POST":					
+				if request.method != "POST":
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
@@ -98,8 +101,10 @@ def api_http(event):
 														params[query_string.split("=")[0]] = query_string.split("=")[1]
 													print(params)
 													if 'v' in params:
-														db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now())
-														output = {"status": 200, "message": "OK", "error": False}
+														yt_api = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={params['v']}&key={config.youtube_key}")
+														if yt_api.json()['pageInfo']['totalResults']:
+															db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now(), isodate.parse_duration(yt_api.json(0)["items"][0]["contentDetails"]["duration"]).seconds)
+															output = {"status": 200, "message": "OK", "error": False}
 												else:
 													output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 											else:
