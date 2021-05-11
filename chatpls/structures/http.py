@@ -23,7 +23,7 @@ class Server(object):
 		# Create socket, bind and listen.
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.socket.bind((self.host, self.port))
-		self.socket.listen(50)
+		self.socket.listen(1000)
 		# Start connection loop
 		while True:
 			# Accept connection
