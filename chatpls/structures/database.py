@@ -124,7 +124,7 @@ class Database:
 		cursor.execute(
 			"SELECT * FROM queue ORDER BY add_time ASC", 
 		)
-		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5]} for row in cursor]
+		return [{"username": row[0], "link": row[1], "add_time": row[2], "likes": row[3], "dislikes": row[4], "start_time": row[5], "length": row[6]} for row in cursor]
 	
 	def delete_from_queue(self, username):
 		cursor = self.conn.cursor()
