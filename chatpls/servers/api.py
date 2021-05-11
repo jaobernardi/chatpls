@@ -93,6 +93,7 @@ def api_http(event):
 												params = {}
 												for query_string in urlparse(link).query.split("&"):
 													params[query_string.split("=")[0]] = query_string.split("=")[1]
+												print(params)
 												if 'v' in params:
 													db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now())
 													output = {"status": 200, "message": "OK", "error": False}
