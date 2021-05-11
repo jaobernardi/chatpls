@@ -32,7 +32,9 @@ def api_http(event):
 					with Database() as db:
 						queue = format_queue(db.get_queue())
 						if not queue[0]["start_time"]:
-							db.queue_set_running(queue[0]["username"], datetime.now())
+							now = datetime.now()
+							db.queue_set_running(queue[0]["username"], now)
+							queue[0]['start_time'] = now.timestamp()
 						output = {"status": 200, "message": "OK", "error": False, "data": None if not queue else queue[0]}
 
 			case ["current", "reaction"]:
