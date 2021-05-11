@@ -36,6 +36,7 @@ class Server(object):
 		self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.socket.bind((self.host, self.port))
 		self.socket.listen(50)
+		socket.settimeout(5)
 		# Start connection loop
 		with self.context.wrap_socket(self.socket, server_side=True) as ssock:
 			while True:
@@ -54,23 +55,19 @@ class Server(object):
 		# Recieve data
 		data = b""
 		headers = {}
-		conn.setblocking(0)
-		strikes = 0
 		try:
 			while True:			
-				if b"\r\n\r\n" in data:
-					for line in data.split(b"\n")[1:]:
-						headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
-					if "Content-Length" in headers:
-						body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
-						if len(body) >= int(headers["Content-Length"]):
-							break
-					else:
-						break
+				# if b"\r\n\r\n" in data:
+				# 	for line in data.split(b"\n")[1:]:
+				# 		headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
+				# 	if "Content-Length" in headers:
+				# 		body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
+				# 		if len(body) >= int(headers["Content-Length"]):
+				# 			break
+				# 	else:
+				# 		break
 				new_data = conn.recv(1)
 				if not new_data:
-					strikes += 1
-				if strikes > 500:
 					break
 				data += new_data
 		
