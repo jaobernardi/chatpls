@@ -54,6 +54,8 @@ class Server(object):
 		# Recieve data
 		data = b""
 		headers = {}
+		conn.setblocking(0)
+		strikes = 0
 		try:
 			while True:			
 				if b"\r\n\r\n" in data:
@@ -67,6 +69,8 @@ class Server(object):
 						break
 				new_data = conn.recv(1)
 				if not new_data:
+					strikes += 1
+				if strikes > 500:
 					break
 				data += new_data
 		
