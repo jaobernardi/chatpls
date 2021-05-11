@@ -31,7 +31,7 @@ def api_http(event):
 				else:
 					with Database() as db:
 						queue = format_queue(db.get_queue())
-						if not queue[0]["start_time"]:
+						if queue and queue[0]["start_time"]:
 							now = datetime.now()
 							db.queue_set_running(queue[0]["username"], now)
 							queue[0]['start_time'] = now.timestamp()
