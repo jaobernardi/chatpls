@@ -75,7 +75,8 @@ def api_http(event):
 					default_headers = default_headers | {'Allow': 'POST'}
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
-					if True:
+					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					try:
 						data = json.loads(request.data.decode("utf-8"))
 						match data:
 							case {"token": token, "link": link}:								
@@ -84,9 +85,13 @@ def api_http(event):
 									if users:										
 										user = db.get_user(user_id=users[0])
 										if twitch.check_subscription(user):
-											if urlparse(link).netloc == "youtube.com":
-												db.append_to_queue(user.username, link, datetime.now())
-												output = {"status": 200, "message": "OK", "error": False}
+											if urlparse(link).query and urlparse(link).netloc in ["youtube.com", "www.youtube.com"]:
+												params = {}
+												for query_string in urlparse(link).query.split("&"):
+													params[query_string.split("=")[0]] = query_string.split("=")[1]
+												if 'v' in params:
+													db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now())
+													output = {"status": 200, "message": "OK", "error": False}
 											else:
 												output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 										else:
@@ -95,15 +100,33 @@ def api_http(event):
 										output = {"status": 403, "message": "Unauthorized", "error": True}
 							case _:
 								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
-					#except Exception as e:
-					#	print(e)					
-					#	output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					except Exception as e:
+						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 				else:							
 					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 
 			case ["queue", "leave"]:
-				output = {"status": 501, "message": "Not Implemented.", "error": True}
-
+				if request.method != "POST":					
+					default_headers = default_headers | {'Allow': 'POST'}
+					output = {"status": 405, "message": "Method Not Allowed", "error": True}
+				elif 'Content-Type' in request.headers and request.headers['Content-Type'] == 'application/json':
+					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					try:
+						data = json.loads(request.data.decode("utf-8"))
+						match data:
+							case {"token": token}:								
+								with Database() as db:
+									users = db.get_tokens(token=token)
+									if users:										
+										user = db.get_user(user_id=users[0])
+										db.delete_from_queue(user.username)
+										output = {"status": 200, "message": "OK", "error": False}
+							case _:
+								output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+					except Exception as e:
+						output = {"status": 422, "message": "Unprocessable Entity", "error": True}
+				else:							
+					output = {"status": 422, "message": "Unprocessable Entity", "error": True}
 			case ["queue", "keepalive"]:
 				output = {"status": 501, "message": "Not Implemented.", "error": True}
 
