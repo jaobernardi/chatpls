@@ -16,9 +16,7 @@ errors = {
 def normal_http(event):
 	request = event.request
 	if "Host" in request.headers and request.headers["Host"] == config.scopes["home"]:
-		default_headers = {
-			"Server": "chatpls/1.0",
-		}
+		default_headers = event.default_headers
 		path = os.path.join("web_assets/", request.path.removeprefix("/"))
 
 		if ".." in path:

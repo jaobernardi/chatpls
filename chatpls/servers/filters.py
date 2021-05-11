@@ -2,6 +2,7 @@ import events
 from structures import Response, Config
 from tasks import thread_function
 import time
+import socket
 
 config = Config()
 global rates
@@ -17,6 +18,7 @@ def analizer_http(event):
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
+	event.add_property(default_headers={"X-Server": 'chatpls/1.0', 'X-Backend': socket.gethostname()})
 
 	if globals()['clean_time'] <= time.time():
 		globals()["rates"] = {}

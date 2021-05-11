@@ -19,9 +19,7 @@ twitchapi = TwitchAPI('r9fxp28e0wimgjdpf9dg050ncn7spi', config.client_secret)
 def auth_http(event):
 	request = event.request
 	if "Host" in request.headers and request.headers["Host"] == config.scopes["auth"]:
-		default_headers = {
-			"Server": "chatpls/1.0",
-		}
+		default_headers = event.default_headers
 		match event.path:
 			case []:
 				if "code" in request.query_string:

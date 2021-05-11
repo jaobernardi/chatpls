@@ -21,9 +21,7 @@ def format_queue(inp):
 def api_http(event):
 	request = event.request
 	if "Host" in request.headers and request.headers["Host"] == config.scopes["api"]:
-		default_headers = {
-			"Server": "chatpls/1.0",
-		}
+		default_headers = event.default_headers
 		# check api-method.
 		match event.path:
 			case ["current"]:
