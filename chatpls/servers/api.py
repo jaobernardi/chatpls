@@ -31,6 +31,8 @@ def api_http(event):
 				else:
 					with Database() as db:
 						queue = format_queue(db.get_queue())
+						if not queue[0]["start_time"]:
+							db.queue_set_running(queue[0]["username"], datetime.now())
 						output = {"status": 200, "message": "OK", "error": False, "data": None if not queue else queue[0]}
 
 			case ["current", "reaction"]:
