@@ -5,7 +5,7 @@ import events
 events.call_event("startup")
 config = Config()
 server = Server(config.host, config.port, config.certificate, config.private_key)
-server.https_start()
+server.http_start()
 def shutdown(*args, **kwargs):
     server.stop()
     exit()
