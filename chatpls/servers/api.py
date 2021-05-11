@@ -32,11 +32,13 @@ def api_http(event):
 					output = {"status": 405, "message": "Method Not Allowed", "error": True}
 				else:
 					with Database() as db:
+						now = datetime.now()
 						queue = format_queue(db.get_queue())
-						if queue and not queue[0]["start_time"]:
-							now = datetime.now()
+						if queue and not queue[0]["start_time"]:							
 							db.queue_set_running(queue[0]["username"], now)
 							queue[0]['start_time'] = now.timestamp()
+						if (now.timestamp() - queue[0]['start_time']) > queue[0]['lenngth']:
+							db.delete_from_queue(queue[0]['username'])
 						output = {"status": 200, "message": "OK", "error": False, "data": None if not queue else queue[0]}
 
 			case ["current", "reaction"]:
