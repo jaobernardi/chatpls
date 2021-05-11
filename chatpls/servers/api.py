@@ -90,7 +90,7 @@ def api_http(event):
 										user = db.get_user(user_id=users[0])
 										queue = db.get_queue()
 										match queue:
-											case [{"username": user.username}, _]:
+											case [{"username": f"{user.username}"}, _]:
 												output = {"status": 403, "message": "Unauthorized", "error": True}
 											case _:
 												if twitch.check_subscription(user):
