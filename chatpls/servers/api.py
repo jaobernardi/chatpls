@@ -37,8 +37,9 @@ def api_http(event):
 						if queue and not queue[0]["start_time"]:							
 							db.queue_set_running(queue[0]["username"], now)
 							queue[0]['start_time'] = now.timestamp()
-						if (now.timestamp() - queue[0]['start_time']) > queue[0]['lenngth']:
+						if (now.timestamp() - queue[0]['start_time']) > queue[0]['length']:
 							db.delete_from_queue(queue[0]['username'])
+							
 						output = {"status": 200, "message": "OK", "error": False, "data": None if not queue else queue[0]}
 
 			case ["current", "reaction"]:
