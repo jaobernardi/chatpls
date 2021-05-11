@@ -57,15 +57,15 @@ class Server(object):
 		headers = {}
 		try:
 			while True:			
-				# if b"\r\n\r\n" in data:
-				# 	for line in data.split(b"\n")[1:]:
-				# 		headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
-				# 	if "Content-Length" in headers:
-				# 		body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
-				# 		if len(body) >= int(headers["Content-Length"]):
-				# 			break
-				# 	else:
-				# 		break
+				if b"\r\n\r\n" in data:
+					for line in data.split(b"\n")[1:]:
+						headers[line.split(b": ")[0].decode('utf-8')] = b"".join(line.split(b": ")[1:]).decode('utf-8')
+					if "Content-Length" in headers:
+						body = b"\r\n\r\n".join(data.split(b"\r\n\r\n")[1:])
+						if len(body) >= int(headers["Content-Length"]):
+							break
+					else:
+						break
 				new_data = conn.recv(1)
 				if not new_data:
 					break
