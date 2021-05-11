@@ -100,9 +100,9 @@ def api_http(event):
 														params[query_string.split("=")[0]] = query_string.split("=")[1]
 													print(params)
 													if 'v' in params:
-														yt_api = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={params['v']}&key={config.youtube_key}")
-														if yt_api.json()['pageInfo']['totalResults']:
-															db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now(), isodate.parse_duration(yt_api.json(0)["items"][0]["contentDetails"]["duration"]).seconds)
+														yt_api = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={params['v']}&key={config.youtube_key}").json()
+														if yt_api['pageInfo']['totalResults']:
+															db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now(), isodate.parse_duration(yt_api["items"][0]["contentDetails"]["duration"]).seconds)
 															output = {"status": 200, "message": "OK", "error": False}
 												else:
 													output = {"status": 422, "message": "Unprocessable Entity", "error": True}
