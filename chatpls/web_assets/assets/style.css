@@ -12,6 +12,11 @@ h1 {
     color: white
 }
 
+.full {
+    width: 100%;
+    padding: 0.2vh;
+}
+
 .right {
     float: right;
     padding: 10px;
