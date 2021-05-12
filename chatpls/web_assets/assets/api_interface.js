@@ -34,8 +34,7 @@ function get_queue(callback){
                 response = JSON.parse(response)
             } catch (error) {
                 response = {queue: []}
-            }
-            
+            }            
             callback(response.queue)
     
         }
