@@ -14,13 +14,11 @@ h1 {
 
 .right {
     float: right;
-    width: 300px;
     padding: 10px;
 }
 
 .left {
     float: left;
-    width: 300px;
     padding: 10px;
 }
 
