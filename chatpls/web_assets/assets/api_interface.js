@@ -6,8 +6,8 @@ function get_current(callback){
 
     Http.onreadystatechange = (e) => {
         response = Http.responseText
-        if (response.status == 200 && response.queue){
-            callback(response.queue.link, response.queue.start_time)
+        if (response.status == 200 && response.data){
+            callback(response.data.link, response.data.start_time)
         } else {
             callback(null, null)
         }
@@ -22,6 +22,6 @@ function get_queue(callback){
 
     Http.onreadystatechange = (e) => {
         response = Http.responseText
-        callback(response.data)
+        callback(response.queue)
     }
 }
