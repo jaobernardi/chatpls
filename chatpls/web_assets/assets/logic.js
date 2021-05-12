@@ -11,7 +11,7 @@ function queue_item_element(text) {
     return element
 }
 
-var last_queue;
+var last_queue = "peepoHey";
 
 function update_list(queue) {
     queue_element = document.getElementById("queue")
@@ -21,7 +21,7 @@ function update_list(queue) {
         queue.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
         });
-    } else if (queue !== last_queue) {
+    } else if (last_queue) {
         last_queue = queue;
         no_one = queue_item_element("Nada por aqui . . . ")
         no_one.appendChild(image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/1x"))
