@@ -57,6 +57,6 @@ function update_video(id, start_time){
 }
 
 setInterval(()=>{
-    get_queue(update_list);
-    get_current(update_video)
+    get_queue((queue) => {update_list(queue)});
+    get_current((id, start_time)=>{update_video(id, start_time)})
 }, 700)
