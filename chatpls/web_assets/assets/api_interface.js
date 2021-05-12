@@ -16,7 +16,7 @@ function get_current(callback){
 
 function get_queue(callback){
     Http = new XMLHttpRequest();
-    url='https://api.chatpls.live/current/';
+    url='https://api.chatpls.live/queue/';
     Http.open("GET", url);
     Http.send();
 
