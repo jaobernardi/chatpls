@@ -17,6 +17,10 @@ h1 {
     padding: 10px;
 }
 
+.darker {
+    background-color: #1b1b1b;
+}
+
 .left {
     float: left;
     padding: 10px;
