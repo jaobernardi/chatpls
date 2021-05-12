@@ -25,7 +25,7 @@ function get_queue(callback){
         try {
             response = JSON.parse(response)
         } catch (error) {
-            response = []
+            response = {queue: null}
         }
         
         callback(response.queue)
