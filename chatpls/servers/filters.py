@@ -18,7 +18,7 @@ def analizer_http(event):
 	request = event.request
 	path = [i.lower() for i in request.path.split("/")[1:] if i]
 	event.add_property(path=path)
-	event.add_property(default_headers={"X-Server": 'chatpls/1.0', 'X-Backend': socket.gethostname()})
+	event.add_property(default_headers={"X-Server": 'chatpls/1.0', 'X-Backend': socket.gethostname(), "Access-Control-Allow-Origin": "*"})
 	
 @events.add_handle("http_request", priority=-1)
 def fallback_http(event):
