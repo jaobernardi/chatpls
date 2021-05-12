@@ -33,7 +33,7 @@ function update_video(id, start_time){
         if (player.getVideoData().video_id != id){
             player.loadVideoById(id)
         }
-    } else {
+    } else if (player.getVideoData().video_id != 'dQw4w9WgXcQ'){
         player.loadVideoById('dQw4w9WgXcQ')        
     }
 }
