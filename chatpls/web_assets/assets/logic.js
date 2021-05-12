@@ -28,4 +28,4 @@ function update_list(queue) {
 
 setInterval(()=>{
     get_queue((queue) => {update_list(queue)})
-}, 100)
+}, 700)
