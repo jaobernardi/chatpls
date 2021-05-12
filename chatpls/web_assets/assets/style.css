@@ -41,6 +41,6 @@
     bottom: 0;
     width: 100%;
     background-color: #131313;
-    color: rgb(214, 214, 214);
+    color: rgba(214, 214, 214, 1);
     text-align: center;
   }
