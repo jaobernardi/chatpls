@@ -13,7 +13,7 @@
 
 .full {
     width: 100%;
-    padding: 0.2vh;
+    padding: 1vh;
 }
 
 .right {
@@ -34,8 +34,5 @@
 }
 
 .center {
-    margin: auto;
-    width: 50%;
     align-self: center;
-    padding: 10px;
 }
