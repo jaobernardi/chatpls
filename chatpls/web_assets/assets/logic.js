@@ -14,11 +14,11 @@ function queue_item_element(text) {
 
 var modCheck = image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/1x");
 
-function update_list(queue) {
+function update_list(queue_list) {
     queue_element = document.getElementById("queue")
     queue_element.innerHTML = ""
-    if (queue.length){
-        queue.forEach(element => {
+    if (queue_list.length){
+        queue_list.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
         });
     } else {
@@ -37,8 +37,6 @@ function update_video(id, start_time){
 }
 
 setInterval(()=>{
-    get_queue((queue) => {update_list(queue)});
-}, 700)
-setInterval(()=>{
+    get_queue((queue_list) => {update_list(queue_list)});
     get_current((id, start_time)=>{update_video(id, start_time)})
 }, 700)
