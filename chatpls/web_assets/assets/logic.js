@@ -50,7 +50,6 @@ function update_list(array_queue) {
 
 function update_video(id, start_time){
     if (id){
-        console.log(player.getVideoData().video_id != id)
         if (player.getVideoData().video_id != id){
             player.loadVideoById(id)
         }
