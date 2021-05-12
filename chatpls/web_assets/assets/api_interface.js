@@ -6,6 +6,11 @@ function get_current(callback){
 
     Http.onreadystatechange = (e) => {
         response = Http.responseText
+        try {
+            response = JSON.parse(response)
+        } catch (error) {
+            response = {status: 500, data: null}
+        }
         if (response.status == 200 && response.data){
             callback(response.data.link, response.data.start_time)
         } else {
