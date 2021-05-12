@@ -16,8 +16,8 @@ var modCheck = image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9
 function update_list(array_queue) {
     queue_element = document.getElementById("queue")
     queue_element.innerHTML = ""
-    if (array_queue){
-        console.log(1)
+    if (array_queue.length){
+        console.log(array_queue)
         array_queue.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
         });
@@ -26,7 +26,6 @@ function update_list(array_queue) {
         no_one.appendChild(modCheck)
         queue_element.appendChild(no_one)
     }
-
 }
 
 setInterval(()=>{
