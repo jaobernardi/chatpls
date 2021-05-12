@@ -1,7 +1,7 @@
 function queue_item_element(text) {
     element = document.createElement("h4")
     element.innerText = text
-    return text
+    return element
 }
 
 function update_list(queue) {
