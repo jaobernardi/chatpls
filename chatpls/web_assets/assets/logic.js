@@ -1,22 +1,3 @@
-// Load the IFrame Player API code asynchronously.
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/player_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// Replace the 'ytplayer' element with an <iframe> and
-// YouTube player after the API code downloads.
-var player;
-
-function onYouTubePlayerAPIReady() {
-    player = new YT.Player('ytplayer', {
-    height: '360',
-    width: '640',
-    videoId: 'dQw4w9WgXcQ'
-    });
-
-}
-
 function image_element(link){
     element = document.createElement("img")
     element.src = link
@@ -36,7 +17,6 @@ var modCheck = image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9
 function update_list(input) {
     queue_element = document.getElementById("queue")
     queue_element.innerHTML = ""
-    console.log(input)
     if (input.length){
         input.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
