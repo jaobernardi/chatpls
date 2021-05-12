@@ -33,12 +33,12 @@ function queue_item_element(text) {
 
 var modCheck = image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/1x");
 
-function update_list(array_queue) {
+function update_list(input) {
     queue_element = document.getElementById("queue")
     queue_element.innerHTML = ""
-    console.log(array_queue)
-    if (array_queue.length){
-        array_queue.forEach(element => {
+    console.log(input)
+    if (input.length){
+        input.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
         });
     } else {
