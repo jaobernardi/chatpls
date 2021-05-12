@@ -12,6 +12,18 @@ h1 {
     color: white
 }
 
+.right {
+    float: right;
+    width: 300px;
+    padding: 10px;
+}
+
+.left {
+    float: left;
+    width: 300px;
+    padding: 10px;
+}
+
 .center {
     margin: auto;
     width: 50%;
