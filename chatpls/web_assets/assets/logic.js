@@ -18,7 +18,6 @@ function update_list(array_queue) {
     queue_element = document.getElementById("queue")
     queue_element.innerHTML = ""
     if (array_queue.length){
-        console.log(array_queue)
         array_queue.forEach(element => {
             queue_element.appendChild(queue_item_element(element.username))
         });
