@@ -5,7 +5,7 @@ function get_current(callback){
     Http.send();
 
     Http.onreadystatechange = (e) => {
-        if (xmlHttp.readyState == 4){
+        if (Http.readyState == 4){
             response = Http.responseText
             try {
                 response = JSON.parse(response)
@@ -28,7 +28,7 @@ function get_queue(callback){
     Http.send();
 
     Http.onreadystatechange = (e) => {
-        if (xmlHttp.readyState == 4){
+        if (Http.readyState == 4){
             response = Http.responseText
             try {
                 response = JSON.parse(response)
