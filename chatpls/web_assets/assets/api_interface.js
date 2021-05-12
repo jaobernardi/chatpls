@@ -22,6 +22,7 @@ function get_queue(callback){
 
     Http.onreadystatechange = (e) => {
         response = Http.responseText
+        response = JSON.parse(response)
         callback(response.queue)
     }
 }
