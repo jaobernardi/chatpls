@@ -5,6 +5,7 @@ function get_current(callback){
     Http.send();
 
     Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
         response = JSON.parse(Http.responseText)
         if (response.status == 200){
             callback(response.link, response.start_time)
