@@ -12,7 +12,7 @@ function update_list(queue) {
             queue_element.appendChild(queue_item_element(element.username))
         });
     } else {
-        queue_element.appendChild("Nada por aqui . . . ")
+        queue_element.appendChild(queue_item_element("Nada por aqui . . . "))
     }
 
 }
