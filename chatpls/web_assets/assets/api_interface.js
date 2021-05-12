@@ -3,20 +3,18 @@ function get_current(callback){
     url='https://api.chatpls.live/current/';
     Http.open("GET", url);
     Http.send();
-
-    Http.onreadystatechange = (e) => {
-        response = Http.responseText
-        try {
-            response = JSON.parse(response)
-        } catch (error) {
-            response = {status: 500, data: null}
-        }
-        if (response.status == 200 && response.data){
-            callback(response.data.link, response.data.start_time)
-        } else {
-            callback(null, null)
-        }
+    response = Http.responseText
+    try {
+        response = JSON.parse(response)
+    } catch (error) {
+        response = {status: 500, data: null}
     }
+    if (response.status == 200 && response.data){
+        callback(response.data.link, response.data.start_time)
+    } else {
+        callback(null, null)
+    }
+    
 }
 
 function get_queue(callback){
@@ -24,15 +22,13 @@ function get_queue(callback){
     url='https://api.chatpls.live/queue/';
     Http.open("GET", url);
     Http.send();
-
-    Http.onreadystatechange = (e) => {
-        response = Http.responseText
-        try {
-            response = JSON.parse(response)
-        } catch (error) {
-            response = {queue: []}
-        }
-        
-        callback(response.queue)
+    response = Http.responseText
+    try {
+        response = JSON.parse(response)
+    } catch (error) {
+        response = {queue: []}
     }
+    
+    callback(response.queue)
+
 }
