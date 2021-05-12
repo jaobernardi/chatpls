@@ -23,24 +23,6 @@ function update_video(id, start_time){
 }
 
 setInterval(()=>{
-    get_queue((queue_list) => {
-        queue_element = document.getElementById("queue")
-        queue_element.innerHTML = ""
-        if (queue_list.length){
-            queue_list.forEach(element => {
-                queue_element.appendChild(queue_item_element(element.username))
-            });
-        } else {
-            no_one = queue_item_element("Nada por aqui . . . ")
-            no_one.appendChild(modCheck)
-            queue_element.appendChild(no_one)
-        }
-    });
-    get_current((id, start_time)=>{
-        if (id){
-            if (player.getVideoData().video_id != id){
-                player.loadVideoById(id)
-            }
-        }
-    })
+    get_queue((queue_list) => {console.log(queue_list)});
+    get_current((id, start_time)=>{update_video(id, start_time)})
 }, 700)

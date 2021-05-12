@@ -30,11 +30,13 @@ function get_queue(callback){
     Http.onreadystatechange = (e) => {
         if (Http.readyState == 4){
             response = Http.responseText
+            console.log(response)
             try {
                 response = JSON.parse(response)
             } catch (error) {
                 response = {queue: []}
-            }            
+            }
+            console.log(response)
             queue = response.queue
             callback(queue)
     
