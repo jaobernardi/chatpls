@@ -1,3 +1,22 @@
+// Load the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// Replace the 'ytplayer' element with an <iframe> and
+// YouTube player after the API code downloads.
+var player;
+
+function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+    height: '360',
+    width: '640',
+    videoId: 'dQw4w9WgXcQ'
+    });
+
+}
+
 function image_element(link){
     element = document.createElement("img")
     element.src = link
@@ -28,6 +47,15 @@ function update_list(array_queue) {
     }
 }
 
+function update_video(id, start_time){
+    if (id){
+        if (player.getVideoData().video_id != id){
+            player.loadVideoById(id)
+        }
+    }
+}
+
 setInterval(()=>{
-    get_queue((queue) => {update_list(queue)})
+    get_queue(update_list);
+    get_current(update_video)
 }, 700)
