@@ -5,13 +5,6 @@ import time
 import socket
 
 config = Config()
-global rates
-global timeouts
-global clean_time
-rates = {}
-timeouts = {}
-clean_time = time.time() + 10
-
 
 @events.add_handle("http_request", priority=100)
 def analizer_http(event):
