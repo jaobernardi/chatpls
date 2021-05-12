@@ -13,14 +13,12 @@
 
 .full {
     width: 100%;
-    padding: 1vh;
+    padding: 4vh;
 }
 
 .right {
     float: right;
-    padding: 10px;
-    width: 50%;
-    padding: 10px;    
+    width: 50%; 
 }
 
 .darker {
@@ -30,7 +28,6 @@
 .left {
     float: left;
     width: 50%;
-    padding: 10px;
 }
 
 .center {
