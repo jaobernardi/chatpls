@@ -7,10 +7,9 @@
     box-sizing: border-box;
     font-family: "Inconsolata", sans-serif;
     background-color: #242424;
-}
-h1 {
     color: white
 }
+
 
 .full {
     width: 100%;
