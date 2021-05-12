@@ -9,7 +9,8 @@
     <script src="/assets/api_interface.js"></script>
 </head>
 <body>
-    <div  id="ytplayer"></div>
+    <h1 id="title"><img src="https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/3x" alt="modCheck"> Nenhuma música tocando</h1>
+    <div id="ytplayer"></div>
 
     <script>
     // Load the IFrame Player API code asynchronously.
@@ -21,12 +22,14 @@
     // Replace the 'ytplayer' element with an <iframe> and
     // YouTube player after the API code downloads.
     var player;
+    
     function onYouTubePlayerAPIReady() {
         player = new YT.Player('ytplayer', {
         height: '360',
         width: '640',
-        videoId: 'M7lc1UVf-VE'
+        videoId: 'dQw4w9WgXcQ'
         });
+
     }
     </script>
 </body>
