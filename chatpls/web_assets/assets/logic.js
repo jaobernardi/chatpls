@@ -20,7 +20,7 @@ function update_list(queue) {
         });
     } else {
         no_one = queue_item_element("Nada por aqui . . . ")
-        no_one.innerHTML += image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/1x")
+        no_one.appendChild(image_element("https://cdn.betterttv.net/emote/5d7eefb7c0652668c9e4d394/1x"))
         queue_element.appendChild(no_one)
     }
 
