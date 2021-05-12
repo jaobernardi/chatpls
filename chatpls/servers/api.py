@@ -106,7 +106,7 @@ def api_http(event):
 													if 'v' in params:
 														yt_api = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={params['v']}&key={config.youtube_key}").json()
 														if yt_api['pageInfo']['totalResults']:
-															db.append_to_queue(user.username, "https://www.youtube.com/watch?v="+params['v'], datetime.now(), isodate.parse_duration(yt_api["items"][0]["contentDetails"]["duration"]).seconds)
+															db.append_to_queue(user.username, params['v'], datetime.now(), isodate.parse_duration(yt_api["items"][0]["contentDetails"]["duration"]).seconds)
 															output = {"status": 200, "message": "OK", "error": False}
 												else:
 													output = {"status": 422, "message": "Unprocessable Entity", "error": True}
