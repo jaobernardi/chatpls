@@ -7,7 +7,7 @@ function image_element(link){
 function queue_item_element(text) {
     element = document.createElement("h4")
     element.align = "center"
-    element.style = "padding: 0.5vh"
+    element.style = "padding: 1.5vh"
     element.innerText = text
     return element
 }
