@@ -1,12 +1,12 @@
 function get_current(callback){
-    Http = new XMLHttpRequest();
+    current_request = new XMLHttpRequest();
     url='https://api.chatpls.live/current/';
-    Http.open("GET", url);
-    Http.send();
+    current_request.open("GET", url);
+    current_request.send();
 
-    Http.onreadystatechange = (e) => {
-        if (Http.readyState == 4){
-            response = Http.responseText
+    current_request.onreadystatechange = (e) => {
+        if (current_request.readyState == 4){
+            response = current_request.responseText
             try {
                 response = JSON.parse(response)
             } catch (error) {
@@ -22,14 +22,14 @@ function get_current(callback){
 }
 
 function get_queue(callback){
-    Http = new XMLHttpRequest();
+    queue_request = new XMLHttpRequest();
     url='https://api.chatpls.live/queue/';
-    Http.open("GET", url);
-    Http.send();
+    queue_request.open("GET", url);
+    queue_request.send();
 
-    Http.onreadystatechange = (e) => {
-        if (Http.readyState == 4){
-            response = Http.responseText
+    queue_request.onreadystatechange = (e) => {
+        if (queue_request.readyState == 4){
+            response = queue_request.responseText
             console.log(response)
             try {
                 response = JSON.parse(response)
