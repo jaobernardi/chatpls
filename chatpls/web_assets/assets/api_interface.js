@@ -22,7 +22,12 @@ function get_queue(callback){
 
     Http.onreadystatechange = (e) => {
         response = Http.responseText
-        response = JSON.parse(response)
+        try {
+            response = JSON.parse(response)
+        } catch (error) {
+            response = []
+        }
+        
         callback(response.queue)
     }
 }
